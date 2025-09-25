@@ -1,11 +1,11 @@
 {
+  "$schema": "../dynamic-compose-schema.json",
   "services": [
     {
-      "name": "sentryshot",
-      "image": "codeberg.org/sentryshot/sentryshot:v0.3.6",
       "isMain": true,
-      "networkMode": "host",
-      "internalPort": "2020",
+      "image": "codeberg.org/sentryshot/sentryshot:v0.3.6",
+      "name": "sentryshot",
+      "internalPort": 2020,
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/sentryshot/configs",
@@ -14,7 +14,7 @@
         {
           "hostPath": "${ROOT_FOLDER_HOST}/media/data/NVR/sentryshot/storage",
           "containerPath": "/app/storage"
-        }
+        }		
       ]
     }
   ]
