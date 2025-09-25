@@ -9,7 +9,7 @@
     "security"
   ],
   "description": "Video surveillance management system.",
-  "tipi_version": 1.2,
+  "tipi_version": "2",
   "version": "v0.3.6",
   "source": "https://codeberg.org/SentryShot/sentryshot",
   "exposable": true,
