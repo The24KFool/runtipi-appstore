@@ -53,9 +53,11 @@
       "name": "trudesk-es",
       "image": "elasticsearch:7.17.28",
       "internalPort": 9200,	  
-      "environment": {	  
+      "environment": {	 
+        "HOST_UID": "1000",
+        "HOST_GID": "1000",	  
         "discovery.type": "single-node",
-        "ES_JAVA_OPTS": "-Xms512m -Xmx512m",	
+        "ES_JAVA_OPTS": "-Xms1g -Xmx1g",	
         "xpack.security.enabled": "false",
         "xpack.security.http.ssl.enabled": "false",
         "ES_TMPDIR": "/tmp"		
