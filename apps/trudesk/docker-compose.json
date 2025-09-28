@@ -3,7 +3,7 @@
   "services": [
     {
       "isMain": true,
-      "image": "polonel/trudesk:v1.2.11",
+      "image": "polonel/trudesk:1.2.11",
       "name": "trudesk",
       "internalPort": 8118,
 	  "dependsOn": ["trudesk-db", "trudesk-es"],
