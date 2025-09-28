@@ -1,0 +1,28 @@
+{
+  "name": "Trudesk",
+  "id": "trudesk",
+  "available": true,
+  "short_desc": "Trudesk Help Desk Solution",
+  "author": "polonel",
+  "port": 8118,
+  "categories": [
+    "utilities"
+  ],
+  "description": "Trudesk Help Desk Solution",
+  "tipi_version": 1,
+  "version": "v1.2.11",
+  "source": "https://github.com/polonel/trudesk",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Trudesk DB Password",
+      "min": 32,
+      "env_variable": "TRUDESK_DB_PASSWORD"
+    }
+  ],
+  "exposable": true,
+  "supported_architectures": [
+    "amd64"
+  ],
+  "dynamic_config": true
+}

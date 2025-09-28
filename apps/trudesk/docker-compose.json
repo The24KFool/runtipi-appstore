@@ -1,0 +1,73 @@
+{
+  "$schema": "../dynamic-compose-schema.json",
+  "services": [
+    {
+      "isMain": true,
+      "image": "polonel/trudesk:v1.2.11",
+      "name": "trudesk",
+      "internalPort": 8118,
+	  "dependsOn": ["trudesk-db", "trudesk-es"],
+      "environment": {  
+		"NODE_ENV": "production",       
+		"TRUDESK_DOCKER": "true",
+		"TD_MONGODB_SERVER": "trudesk-db",
+		"TD_MONGODB_DATABASE": "trudesk",		
+		"ELASTICSEARCH_URI": "http://trudesk-es:9200",		
+		"USE_XFORWARDIP": "true"		
+      },		
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/trudesk/uploads",
+          "containerPath": "/usr/src/trudesk/public/uploads"
+        },
+        {		
+          "hostPath": "${APP_DATA_DIR}/data/trudesk/plugins",
+          "containerPath": "/usr/src/trudesk/plugins"		
+        },			
+        {		
+          "hostPath": "${APP_DATA_DIR}/data/trudesk/backups",
+          "containerPath": "/usr/src/trudesk/backups"		
+        }			  
+      ]
+    },		
+    {
+      "image": "mongo:7.0.24",
+      "name": "trudesk-db",		
+      "internalPort": 27017,
+      "environment": {
+        "MONGO_INITDB_ROOT_USERNAME": "trudesk",
+        "MONGO_INITDB_ROOT_PASSWORD": "${TRUDESK_DB_PASSWORD}"	  
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/mongodb",
+          "containerPath": "/data/db"
+        }		
+      ] 
+    },
+    {
+      "name": "trudesk-es",
+      "image": "elasticsearch:7.17.28",
+      "internalPort": 9200,	  
+      "environment": {
+        "xpack.security.enabled": "false",
+        "xpack.security.http.ssl.enabled": "false",		  
+        "discovery.type": "single-node",
+        "ES_JAVA_OPTS": "-Xms512m -Xmx512m",		
+        "bootstrap.memory_lock": "true"
+      },
+      "ulimits": {
+        "memlock": {
+          "soft": -1,
+          "hard": -1
+        }
+      },	  
+	  "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/es/data",
+          "containerPath": "/usr/share/elasticsearch/data"
+        }
+      ]
+    }	
+  ]
+}
