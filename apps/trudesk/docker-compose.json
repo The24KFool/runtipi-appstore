@@ -49,12 +49,12 @@
       "name": "trudesk-es",
       "image": "elasticsearch:7.17.28",
       "internalPort": 9200,	  
-      "environment": {
-        "xpack.security.enabled": "false",
-        "xpack.security.http.ssl.enabled": "false",		  
+      "environment": {	  
         "discovery.type": "single-node",
-        "ES_JAVA_OPTS": "-Xms512m -Xmx512m",		
-        "bootstrap.memory_lock": "true"
+        "ES_JAVA_OPTS": "-Xms512m -Xmx512m",	
+        "xpack.security.enabled": "false",
+        "xpack.security.http.ssl.enabled": "false",
+        "ES_TMPDIR": "/tmp"		
       },
       "ulimits": {
         "memlock": {
