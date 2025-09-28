@@ -39,7 +39,8 @@
       "internalPort": 27017,
       "environment": {
         "MONGO_INITDB_ROOT_USERNAME": "trudesk",
-        "MONGO_INITDB_ROOT_PASSWORD": "${TRUDESK_DB_PASSWORD}"	  
+        "MONGO_INITDB_ROOT_PASSWORD": "${TRUDESK_DB_PASSWORD}",
+        "MONGO_INITDB_DATABASE": "trudesk"
       },
       "volumes": [
         {
