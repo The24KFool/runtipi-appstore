@@ -11,7 +11,10 @@
 		"NODE_ENV": "production",       
 		"TRUDESK_DOCKER": "true",
 		"TD_MONGODB_SERVER": "trudesk-db",
-		"TD_MONGODB_DATABASE": "trudesk",		
+		"TD_MONGODB_PORT": 27017,	
+		"TD_MONGODB_USERNAME": "trudesk",			
+		"TD_MONGODB_PASSWORD": "${TRUDESK_DB_PASSWORD}",			
+		"TD_MONGODB_DATABASE": "trudesk",			
 		"ELASTICSEARCH_URI": "http://trudesk-es:9200",		
 		"USE_XFORWARDIP": "true"		
       },		
