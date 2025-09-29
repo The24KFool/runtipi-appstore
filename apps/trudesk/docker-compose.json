@@ -40,7 +40,7 @@
     },
     {
       "name": "trudesk-es",
-      "image": "elasticsearch:8",
+      "image": "elasticsearch:8.19.4",
 	  "restart": "always",
       "internalPort": 9200,
       "environment": {
