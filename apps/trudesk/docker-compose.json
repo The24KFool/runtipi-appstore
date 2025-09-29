@@ -16,14 +16,6 @@
         "USE_XFORWARDIP": "true"
       },
       "volumes": [
-        {
-		  "hostPath": "${APP_DATA_DIR}/data/trudesk/config",
-  		"containerPath": "/usr/src/trudesk/config"
-		},
-		{
-		  "hostPath": "${APP_DATA_DIR}/data/trudesk/plugins",
-		  "containerPath": "/usr/src/trudesk/plugins"
-		},
 		{
           "hostPath": "${APP_DATA_DIR}/data/trudesk/uploads",
           "containerPath": "/usr/src/trudesk/public/uploads"
@@ -36,7 +28,7 @@
     },
     {
       "name": "trudesk-db",
-      "image": "mongo:7",
+      "image": "mongo:5",
 	  "restart": "always",
       "internalPort": 27017,
       "volumes": [
@@ -48,7 +40,7 @@
     },
     {
       "name": "trudesk-es",
-      "image": "elasticsearch:8.19.4",
+      "image": "elasticsearch:8.18.7",
 	  "restart": "always",
       "internalPort": 9200,
       "environment": {

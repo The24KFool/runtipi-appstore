@@ -9,7 +9,7 @@
     "utilities"
   ],
   "description": "Trudesk Help Desk Solution",
-  "tipi_version": 13,
+  "tipi_version": 14,
   "version": "latest",
   "source": "https://github.com/polonel/trudesk",
   "form_fields": [],
