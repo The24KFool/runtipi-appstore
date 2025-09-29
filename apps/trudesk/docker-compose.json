@@ -3,70 +3,61 @@
   "services": [
     {
       "name": "trudesk",
-      "image": "polonel/trudesk:1.2.11",
+      "image": "polonel/trudesk:latest",
       "isMain": true,
       "internalPort": 8118,
-	  "dependsOn": ["trudesk-db", "trudesk-es"],
-      "environment": {  
-		"NODE_ENV": "production",       
-		"TRUDESK_DOCKER": "true",
-		"TD_MONGODB_SERVER": "trudesk-db",
-		"TD_MONGODB_DATABASE": "trudesk",		
-		"ELASTICSEARCH_URI": "http://trudesk-es:9200",		
-		"USE_XFORWARDIP": "true"		
-      },		
+      "dependsOn": ["trudesk-db", "trudesk-es"],
+      "environment": {
+        "NODE_ENV": "production",
+        "TRUDESK_DOCKER": "true",
+        "TD_MONGODB_SERVER": "trudesk-db",
+        "TD_MONGODB_DATABASE": "trudesk",
+        "USE_XFORWARDIP": "true"
+      },
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/trudesk/uploads",
           "containerPath": "/usr/src/trudesk/public/uploads"
         },
-        {		
-          "hostPath": "${APP_DATA_DIR}/data/trudesk/plugins",
-          "containerPath": "/usr/src/trudesk/plugins"		
-        },			
-        {		
+        {
           "hostPath": "${APP_DATA_DIR}/data/trudesk/backups",
-          "containerPath": "/usr/src/trudesk/backups"		
-        }			  
+          "containerPath": "/usr/src/trudesk/backups"
+        }
       ]
-    },		
+    },
     {
-      "name": "trudesk-db",		
+      "name": "trudesk-db",
       "image": "mongo:7",
-      "internalPort": 27017,	  
+      "internalPort": 27017,
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/mongodb",
           "containerPath": "/data/db"
-        }		
-      ] 
+        }
+      ]
     },
     {
       "name": "trudesk-es",
-      "image": "elasticsearch:8.19.4",
-      "internalPort": 9200,	  
-      "environment": {	 
-        "HOST_UID": "1000",
-        "HOST_GID": "1000",	  
+      "image": "elasticsearch:8",
+      "internalPort": 9200,
+      "environment": {
         "discovery.type": "single-node",
-        "ES_JAVA_OPTS": "-Xms1g -Xmx1g",	
         "xpack.security.enabled": "false",
         "xpack.security.http.ssl.enabled": "false",
-        "ES_TMPDIR": "/tmp",
-        "ingest.geoip.downloader.enabled": "false"		
+        "ingest.geoip.downloader.enabled": "false"
       },
       "ulimits": {
         "memlock": {
           "soft": -1,
           "hard": -1
         }
-      },	  
-	  "volumes": [
+      },
+      "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/es/data",
           "containerPath": "/usr/share/elasticsearch/data"
-        }		
+        }
       ]
-    }	
+    }
   ]
 }
