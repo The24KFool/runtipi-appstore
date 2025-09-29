@@ -5,6 +5,7 @@
       "name": "trudesk",
       "image": "polonel/trudesk:latest",
       "isMain": true,
+	  "restart": "always",
       "internalPort": 8118,
       "dependsOn": ["trudesk-db", "trudesk-es"],
       "environment": {
@@ -28,6 +29,7 @@
     {
       "name": "trudesk-db",
       "image": "mongo:7",
+	  "restart": "always",
       "internalPort": 27017,
       "volumes": [
         {
@@ -39,11 +41,14 @@
     {
       "name": "trudesk-es",
       "image": "elasticsearch:8",
+	  "restart": "always",
       "internalPort": 9200,
       "environment": {
-        "discovery.type": "single-node",
         "xpack.security.enabled": "false",
         "xpack.security.http.ssl.enabled": "false",
+        "discovery.type": "single-node",
+        "bootstrap.memory_lock": "true",
+        "ES_JAVA_OPTS": "-Xms512m -Xmx512m",		
         "ingest.geoip.downloader.enabled": "false"
       },
       "ulimits": {
