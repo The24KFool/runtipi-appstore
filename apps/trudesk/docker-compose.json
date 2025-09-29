@@ -2,19 +2,16 @@
   "$schema": "../dynamic-compose-schema.json",
   "services": [
     {
-      "isMain": true,
-      "image": "polonel/trudesk:1.2.11",
       "name": "trudesk",
+      "image": "polonel/trudesk:1.2.11",
+      "isMain": true,
       "internalPort": 8118,
 	  "dependsOn": ["trudesk-db", "trudesk-es"],
       "environment": {  
 		"NODE_ENV": "production",       
 		"TRUDESK_DOCKER": "true",
 		"TD_MONGODB_SERVER": "trudesk-db",
-		"TD_MONGODB_PORT": 27017,	
-		"TD_MONGODB_USERNAME": "trudesk",			
-		"TD_MONGODB_PASSWORD": "${TRUDESK_DB_PASSWORD}",			
-		"TD_MONGODB_DATABASE": "trudesk",			
+		"TD_MONGODB_DATABASE": "trudesk",		
 		"ELASTICSEARCH_URI": "http://trudesk-es:9200",		
 		"USE_XFORWARDIP": "true"		
       },		
@@ -34,14 +31,9 @@
       ]
     },		
     {
-      "image": "mongo:7.0.24",
       "name": "trudesk-db",		
-      "internalPort": 27017,
-      "environment": {
-        "MONGO_INITDB_ROOT_USERNAME": "trudesk",
-        "MONGO_INITDB_ROOT_PASSWORD": "${TRUDESK_DB_PASSWORD}",
-        "MONGO_INITDB_DATABASE": "trudesk"
-      },
+      "image": "mongo:7",
+      "internalPort": 27017,	  
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/mongodb",
@@ -60,7 +52,8 @@
         "ES_JAVA_OPTS": "-Xms1g -Xmx1g",	
         "xpack.security.enabled": "false",
         "xpack.security.http.ssl.enabled": "false",
-        "ES_TMPDIR": "/tmp"		
+        "ES_TMPDIR": "/tmp",
+        "ingest.geoip.downloader.enabled": "false"		
       },
       "ulimits": {
         "memlock": {
@@ -72,7 +65,7 @@
         {
           "hostPath": "${APP_DATA_DIR}/data/es/data",
           "containerPath": "/usr/share/elasticsearch/data"
-        }
+        }		
       ]
     }	
   ]
