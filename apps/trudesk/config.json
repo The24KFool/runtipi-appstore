@@ -9,17 +9,10 @@
     "utilities"
   ],
   "description": "Trudesk Help Desk Solution",
-  "tipi_version": 7,
+  "tipi_version": 8,
   "version": "v1.2.11",
   "source": "https://github.com/polonel/trudesk",
-  "form_fields": [
-    {
-      "type": "random",
-      "label": "Trudesk DB Password",
-      "min": 32,
-      "env_variable": "TRUDESK_DB_PASSWORD"
-    }
-  ],
+  "form_fields": [],
   "exposable": true,
   "supported_architectures": [
     "amd64"

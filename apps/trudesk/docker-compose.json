@@ -43,7 +43,7 @@
     },
     {
       "name": "trudesk-es",
-      "image": "elasticsearch:7.17.28",
+      "image": "elasticsearch:8.19.4",
       "internalPort": 9200,	  
       "environment": {	 
         "HOST_UID": "1000",
