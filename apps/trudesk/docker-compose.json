@@ -50,6 +50,7 @@
         "bootstrap.memory_lock": "true",
         "ES_JAVA_OPTS": "-Xms512m -Xmx512m",		
         "ingest.geoip.downloader.enabled": "false"
+		"TAKE_FILE_OWNERSHIP": "true"
       },
       "ulimits": {
         "memlock": {
