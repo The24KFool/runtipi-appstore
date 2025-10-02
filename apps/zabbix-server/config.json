@@ -4,12 +4,12 @@
   "available": true,
   "short_desc": "Zabbix Server",
   "author": "Zabbix LLC",
-  "port": 10080,
+  "port": 8850,
   "categories": [
     "utilities"
   ],
   "description": "Zabbix Server",
-  "tipi_version": 3,
+  "tipi_version": 4,
   "version": "ubuntu-7.4-latest",
   "source": "https://github.com/zabbix",
   "form_fields": [
