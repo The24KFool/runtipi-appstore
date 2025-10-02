@@ -6,20 +6,14 @@
       "image": "zabbix/zabbix-web-apache-mysql:ubuntu-7.4-latest",
       "isMain": true,
 	  "restart": "always",
-      "internalPort": 8850,
+      "internalPort": 80,
       "dependsOn": ["zabbix-server", "zabbix-server-db"],
       "environment": {
         "ZBX_SERVER_HOST": "zabbix-server",
         "DB_SERVER_HOST": "zabbix-server-db",
         "MYSQL_PASSWORD": "${MARIADB_ZABBIX_PASSWORD}",
 		"MYSQL_ROOT_PASSWORD": "${MARIADB_ROOT_PASSWORD}"
-      },
-      "addPorts": [
-        {
-          "hostPort": 8850,
-          "containerPort": 80
-        }
-      ]
+      }
     },
     {
       "name": "zabbix-server",
@@ -73,3 +67,4 @@
     }	
   ]
 }
+
