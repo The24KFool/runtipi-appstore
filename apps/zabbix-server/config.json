@@ -1,0 +1,37 @@
+{
+  "name": "Zabbix Server",
+  "id": "zabbix-server",
+  "available": true,
+  "short_desc": "Zabbix Server",
+  "author": "Zabbix LLC",
+  "port": 8080,
+  "categories": [
+    "utilities"
+  ],
+  "description": "Zabbix Server",
+  "tipi_version": 1,
+  "version": "ubuntu-7.4-latest",
+  "source": "https://github.com/zabbix",
+  "form_fields": [
+    {
+      "type": "random",
+      "min": 32,
+      "max": 32,
+      "label": "Database Zabbix password",
+      "env_variable": "MARIADB_ZABBIX_PASSWORD"
+    },
+    {
+      "type": "random",
+      "min": 32,
+      "max": 32,
+      "label": "Database root password",
+      "env_variable": "MARIADB_ROOT_PASSWORD"
+    }
+  ],
+  "exposable": true,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "dynamic_config": true
+}

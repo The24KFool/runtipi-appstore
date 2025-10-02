@@ -1,0 +1,75 @@
+{
+  "$schema": "../dynamic-compose-schema.json",
+  "services": [
+    {
+      "name": "zabbix-server-web",
+      "image": "zabbix/zabbix-web-apache-mysql:ubuntu-7.4-latest",
+      "isMain": true,
+	  "restart": "always",
+      "internalPort": 8080,
+      "dependsOn": ["zabbix-server", "zabbix-server-db"],
+      "environment": {
+        "ZBX_SERVER_HOST": "zabbix-server",
+        "DB_SERVER_HOST": "zabbix-server-db",
+        "MYSQL_PASSWORD": "${MARIADB_ZABBIX_PASSWORD}",
+		"MYSQL_ROOT_PASSWORD": "${MARIADB_ROOT_PASSWORD}"
+      },
+      "addPorts": [
+        {
+          "hostPort": 8080,
+          "containerPort": 80
+        }
+      ]
+    },
+    {
+      "name": "zabbix-server",
+      "image": "zabbix/zabbix-server-mysql:ubuntu-7.4-latest",
+	  "restart": "always",
+      "internalPort": 10051,
+      "dependsOn": ["zabbix-server-db"],
+	  "environment": {
+        "DB_SERVER_HOST": "zabbix-server-db",
+        "MYSQL_PASSWORD": "${MARIADB_ZABBIX_PASSWORD}",
+		"MYSQL_ROOT_PASSWORD": "${MARIADB_ROOT_PASSWORD}"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/zabbix-server/modules",
+          "containerPath": "/var/lib/zabbix/modules"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/zabbix-server/enc",
+          "containerPath": "/var/lib/zabbix/enc"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/zabbix-server/mibs",
+          "containerPath": "/var/lib/zabbix/mibs"
+        }			
+      ],
+      "addPorts": [
+        {
+          "hostPort": 10051,
+          "containerPort": 10051
+        }
+      ]
+    },
+    {
+      "name": "zabbix-server-db",
+      "image": "mariadb:10",
+	  "restart": "always",
+      "internalPort": 3306,
+	  "environment": {
+        "MARIADB_DATABASE": "zabbix",
+        "MARIADB_USER": "zabbix",
+        "MARIADB_PASSWORD": "${MARIADB_ZABBIX_PASSWORD}",
+        "MARIADB_ROOT_PASSWORD": "${MARIADB_ROOT_PASSWORD}"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/mariadb",
+          "containerPath": "/var/lib/mysql"
+        }
+      ]
+    }	
+  ]
+}
