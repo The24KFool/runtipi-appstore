@@ -4,7 +4,7 @@
   "available": true,
   "short_desc": "Zabbix Server",
   "author": "Zabbix LLC",
-  "port": 8080,
+  "port": 10080,
   "categories": [
     "utilities"
   ],
