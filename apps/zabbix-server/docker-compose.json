@@ -19,7 +19,6 @@
       "name": "zabbix-server",
       "image": "zabbix/zabbix-server-mysql:ubuntu-7.4-latest",
 	  "restart": "always",
-      "internalPort": 10051,
       "dependsOn": ["zabbix-server-db"],
 	  "environment": {
         "DB_SERVER_HOST": "zabbix-server-db",
@@ -51,7 +50,6 @@
       "name": "zabbix-server-db",
       "image": "mariadb:10",
 	  "restart": "always",
-      "internalPort": 3306,
 	  "environment": {
         "MARIADB_DATABASE": "zabbix",
         "MARIADB_USER": "zabbix",
@@ -63,7 +61,8 @@
           "hostPath": "${APP_DATA_DIR}/data/mariadb",
           "containerPath": "/var/lib/mysql"
         }
-      ]
+      ],
+	  "command": ["--character-set-server=utf8", "--collation-server=utf8_bin"]
     }	
   ]
 }
