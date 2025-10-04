@@ -1,0 +1,21 @@
+{
+  "name": "Greenbone - Community Edition",
+  "id": "greenbone-ce",
+  "available": true,
+  "short_desc": "Open Source Vulnerability Management",
+  "author": "Greenbone AG",
+  "port": 80,
+  "categories": [
+    "security"
+  ],
+  "description": "Open Source Vulnerability Management",
+  "tipi_version": 1,
+  "version": "stable",
+  "source": "https://github.com/greenbone",
+  "exposable": true,
+  "supported_architectures": [
+    "amd64"
+  ],
+  "dynamic_config": true,
+  "form_fields": []
+}

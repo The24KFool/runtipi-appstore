@@ -1,0 +1,363 @@
+{
+  "$schema": "../dynamic-compose-schema.json",
+  "services": [
+        {
+      "name": "vulnerability-tests",
+      "image": "registry.community.greenbone.net/community/vulnerability-tests",
+	  "environment": {
+        "FEED_RELEASE": "24.10"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/openvas/plugins",
+          "containerPath": "/mnt"
+        }		
+      ]
+    },	
+    {
+      "name": "notus-data",
+      "image": "registry.community.greenbone.net/community/notus-data",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/notus",
+          "containerPath": "/mnt"
+        }		
+      ]
+    },
+    {
+      "name": "scap-data",
+      "image": "registry.community.greenbone.net/community/scap-data",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/gvm/scap-data/",
+          "containerPath": "/mnt"
+        }		
+      ]
+    },
+    {
+      "name": "cert-bund-data",
+      "image": "registry.community.greenbone.net/community/cert-bund-data",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/gvm/cert-data",
+          "containerPath": "/mnt"
+        }		
+      ]
+    },
+    {
+      "name": "dfn-cert-data",
+      "image": "registry.community.greenbone.net/community/cert-bund-data",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/gvm/cert-data",
+          "containerPath": "/mnt"
+        }		
+      ]
+    },
+    {
+      "name": "data-objects",
+      "image": "registry.community.greenbone.net/community/data-objects",
+	  "environment": {
+        "FEED_RELEASE": "24.10"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/gvm/data-objects/gvmd",
+          "containerPath": "/mnt"
+        }	
+      ]
+    },
+    {
+      "name": "report-formats",
+      "image": "registry.community.greenbone.net/community/report-formats",
+	  "environment": {
+        "FEED_RELEASE": "24.10"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/gvm/data-objects/gvmd",
+          "containerPath": "/mnt"
+        }		
+      ]
+    },
+    {
+      "name": "gpg-data",
+      "image": "registry.community.greenbone.net/community/gpg-data",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/etc/openvas/gnupg",
+          "containerPath": "/mnt"
+        }	
+      ]
+    },
+    {
+      "name": "redis-server",
+      "image": "registry.community.greenbone.net/community/redis-server",
+	  "restart": "on-failure",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/run/redis/",
+          "containerPath": "/run/redis/"
+        }		
+      ]
+    },
+    {
+      "name": "pg-gvm",
+      "image": "registry.community.greenbone.net/community/pg-gvm:stable",
+	  "restart": "on-failure",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/postgresql",
+          "containerPath": "/var/lib/postgresql"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/var/run/postgresql",
+          "containerPath": "/var/run/postgresql"
+        }		
+      ]
+    },
+    {
+      "name": "gvmd",
+      "image": "registry.community.greenbone.net/community/gvmd:stable",
+	  "restart": "on-failure",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/gvm",
+          "containerPath": "/var/lib/gvm"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/gvm/scap-data/",
+          "containerPath": "/var/lib/gvm/scap-data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/gvm/cert-data",
+          "containerPath": "/var/lib/gvm/cert-data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/gvm/data-objects/gvmd",
+          "containerPath": "/var/lib/gvm/data-objects/gvmd"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/openvas/plugins",
+          "containerPath": "/var/lib/openvas/plugins"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/postgresql",
+          "containerPath": "/var/lib/postgresql"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/run/gvmd",
+          "containerPath": "/run/gvmd"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/run/ospd",
+          "containerPath": "/run/ospd"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/var/run/postgresql",
+          "containerPath": "/var/run/postgresql"
+        }
+      ],
+      "dependsOn": {
+        "pg-gvm": {
+          "condition": "service_started"
+        },
+        "scap-data": {
+          "condition": "service_completed_successfully"
+        },
+        "cert-bund-data": {
+          "condition": "service_completed_successfully"
+        },
+        "dfn-cert-data": {
+          "condition": "service_completed_successfully"
+        },
+        "data-objects": {
+          "condition": "service_completed_successfully"
+        },
+        "report-formats": {
+          "condition": "service_completed_successfully"
+        }
+	  }
+    },
+	{
+      "name": "gsa",
+      "image": "registry.community.greenbone.net/community/gsa:stable",
+      "isMain": true,
+	  "restart": "on-failure",
+      "internalPort": 80,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/run/gvmd",
+          "containerPath": "/run/gvmd"
+        }			
+      ],
+      "dependsOn": ["gvmd"]
+    },
+	{
+      "name": "configure-openvas",
+      "image": "registry.community.greenbone.net/community/openvas-scanner:stable",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/etc/openvas",
+          "containerPath": "/mnt"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/var/log/openvas",
+          "containerPath": "/var/log/openvas"
+        }
+      ],
+      "command": [
+        "/bin/sh",
+        "-c",
+        "printf \"table_driven_lsc = yes\\nopenvasd_server = http://openvasd:80\\n\" > /mnt/openvas.conf && sed \"s/127/128/\" /etc/openvas/openvas_log.conf | sed 's/gvm/openvas/' > /mnt/openvas_log.conf && chmod 644 /mnt/openvas.conf && chmod 644 /mnt/openvas_log.conf && touch /var/log/openvas/openvas.log && chmod 666 /var/log/openvas/openvas.log"
+      ]
+    },
+	{
+      "name": "openvas",
+      "image": "registry.community.greenbone.net/community/openvas-scanner:stable",
+	  "restart": "on-failure",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/etc/openvas",
+          "containerPath": "/etc/openvas"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/var/log/openvas",
+          "containerPath": "/var/log/openvas"
+        }
+      ],
+      "command": [
+        "/bin/sh",
+        "-c",
+        "cat /etc/openvas/openvas.conf && tail -f /var/log/openvas/openvas.log"
+      ],
+	  "dependsOn": {
+        "configure-openvas": {
+          "condition": "service_completed_successfully"
+        }
+	  }
+    },
+	{
+      "name": "openvasd",
+      "image": "registry.community.greenbone.net/community/openvas-scanner:stable",
+	  "restart": "on-failure",
+	  "environment": {
+		"OPENVASD_MODE": "service_notus",
+		"GNUPGHOME": "/etc/openvas/gnupg",
+		"LISTENING": "0.0.0.0:80"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/etc/openvas",
+          "containerPath": "/etc/openvas"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/var/log/openvas",
+          "containerPath": "/var/log/openvas"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/etc/openvas/gnupg",
+          "containerPath": "/etc/openvas/gnupg"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/notus",
+          "containerPath": "/var/lib/notus"
+        }
+      ],
+      "dependsOn": {
+        "vulnerability-tests": {
+          "condition": "service_completed_successfully"
+        },
+        "configure-openvas": {
+          "condition": "service_completed_successfully"
+        },
+        "gpg-data": {
+          "condition": "service_completed_successfully"
+        }
+	  },
+      "networks": {
+       "default": {
+          "alias": "openvasd"
+        }
+	  }
+    },
+	{
+      "name": "ospd-openvas",
+      "image": "registry.community.greenbone.net/community/ospd-openvas:stable",
+	  "restart": "on-failure",
+	  "hostname": "ospd-openvas.local",
+	  "cap_add": ["NET_ADMIN", "NET_RAW"],
+	  "security_opt": ["seccomp=unconfined", "apparmor=unconfined"],
+	  "command":[
+        "ospd-openvas",
+        "-f",
+        "--config",
+        "/etc/gvm/ospd-openvas.conf",
+        "--notus-feed-dir",
+        "/var/lib/notus/advisories",
+        "-m",
+        "666"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/etc/openvas/gnupg",
+          "containerPath": "/etc/openvas/gnupg"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/openvas/plugins",
+          "containerPath": "/var/lib/openvas/plugins"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/var/lib/notus",
+          "containerPath": "/var/lib/notus"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/run/ospd",
+          "containerPath": "/run/ospd"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/run/redis/",
+          "containerPath": "/run/redis/"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/etc/openvas/",
+          "containerPath": "/etc/openvas/"
+        },	
+        {
+          "hostPath": "${APP_DATA_DIR}/var/log/openvas",
+          "containerPath": "/var/log/openvas"
+        }
+      ],
+      "dependsOn": {
+        "redis-server": {
+          "condition": "service_started"
+        },
+        "gpg-data": {
+          "condition": "service_completed_successfully"
+        },
+        "vulnerability-tests": {
+          "condition": "service_completed_successfully"
+        },
+        "configure-openvas": {
+          "condition": "service_completed_successfully"
+        }
+	  }
+    },
+	{
+      "name": "gvm-tools",
+      "image": "registry.community.greenbone.net/community/gvm-tools",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/run/gvmd",
+          "containerPath": "/run/gvmd"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/run/ospd",
+          "containerPath": "/run/ospd"
+        }
+      ],
+      "dependsOn": ["gvmd", "ospd-openvas"]
+    }
+  ]
+}
+
