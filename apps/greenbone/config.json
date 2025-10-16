@@ -4,12 +4,12 @@
   "available": true,
   "short_desc": "Open Source Vulnerability Management",
   "author": "Greenbone AG",
-  "port": 80,
+  "port": 10892,
   "categories": [
     "security"
   ],
   "description": "Open Source Vulnerability Management",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "stable",
   "source": "https://github.com/greenbone",
   "exposable": true,

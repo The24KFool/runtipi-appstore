@@ -1,0 +1,10 @@
+{
+  "$schema": "../dynamic-compose-schema.json",
+  "services": [
+    {
+      "isMain": true,
+      "image": "drwetter/testssl.sh:latest",
+      "name": "testssl"
+    }
+  ]
+}

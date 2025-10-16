@@ -3,7 +3,7 @@
   "services": [
     {
       "isMain": true,
-      "image": "codeberg.org/sentryshot/sentryshot:v0.3.6",
+      "image": "codeberg.org/sentryshot/sentryshot:v0.3.8",
       "name": "sentryshot",
       "internalPort": 2020,
       "volumes": [

@@ -1,0 +1,56 @@
+{
+  "$schema": "../dynamic-compose-schema.json",
+  "services": [
+    {
+      "name": "plant-it",
+      "image": "msdeluise/plant-it-server:latest",
+      "isMain": true,
+	  "restart": "unless-stopped",
+      "internalPort": 3000,
+      "dependsOn": ["plantit-db", "plantit-cache"],
+	  "environment": {
+        "MYSQL_HOST": "plantit-db",
+        "MYSQL_USERNAME": "plantit",
+        "MYSQL_PASSWORD": "${MYSQL_PLANTIT_PASSWORD}",
+        "MYSQL_DATABASE": "plantit",
+        "MYSQL_ROOT_PASSWORD": "${MYSQL_ROOT_PASSWORD}",
+		"JWT_SECRET": "${JWT_SECRET}",
+        "CACHE_HOST": "plantit-cache"
+      },
+      "volumes": [
+		{
+          "hostPath": "${APP_DATA_DIR}/data/plantit/upload-dir",
+          "containerPath": "/upload-dir"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 8080,
+          "containerPort": 8080
+        }
+      ]
+    },
+    {
+      "name": "plantit-db",
+      "image": "mysql:8.0",
+	  "restart": "always",
+	  	"environment": {
+        "MYSQL_USERNAME": "plantit",
+        "MYSQL_PASSWORD": "${MYSQL_PLANTIT_PASSWORD}",
+        "MYSQL_DATABASE": "plantit",
+        "MYSQL_ROOT_PASSWORD": "${MYSQL_ROOT_PASSWORD}"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/mysql",
+          "containerPath": "/var/lib/mysql"
+        }
+      ]
+    },
+    {
+      "name": "plantit-cache",
+      "image": "redis:7.2",
+	  "restart": "always"
+    }
+  ]
+}
