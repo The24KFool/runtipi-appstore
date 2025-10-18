@@ -9,7 +9,7 @@
     "utilities"
   ],
   "description": "Plant-it",
-  "tipi_version": 7,
+  "tipi_version": 8,
   "version": "latest",
   "source": "https://github.com/MDeLuise/plant-it",
   "form_fields": [
@@ -17,15 +17,8 @@
       "type": "random",
       "min": 32,
       "max": 32,
-      "label": "Database plantit password",
-      "env_variable": "MYSQL_PLANTIT_PASSWORD"
-    },
-    {
-      "type": "random",
-      "min": 32,
-      "max": 32,
       "label": "Database root password",
-      "env_variable": "MYSQL_ROOT_PASSWORD"
+      "env_variable": "MYSQL_PLANTIT_ROOT_PASSWORD"
     },
     {
       "type": "random",

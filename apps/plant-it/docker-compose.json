@@ -11,10 +11,9 @@
 	  "environment": {
         "MYSQL_HOST": "plantit-db",
 		"MYSQL_PORT": "3306",
-        "MYSQL_USERNAME": "plantit",
-        "MYSQL_PASSWORD": "${MYSQL_PLANTIT_PASSWORD}",
+        "MYSQL_USERNAME": "root",
+        "MYSQL_PASSWORD": "${MYSQL_PLANTIT_ROOT_PASSWORD}",
         "MYSQL_DATABASE": "plantit",
-        "MYSQL_ROOT_PASSWORD": "${MYSQL_ROOT_PASSWORD}",
 		"JWT_SECRET": "${JWT_SECRET}",
 		"JWT_EXP": "1",
 		"USERS_LIMIT": "-1",
@@ -24,8 +23,6 @@
 		"ALLOWED_ORIGINS": "*",
 		"CACHE_TTL": "86400",
 		"CACHE_PORT": "6379",
-		"SSL_ENABLED": "false",
-		"CERTIFICATE_PATH": "/certificates",
         "CACHE_HOST": "plantit-cache"
       },
       "volumes": [
@@ -50,10 +47,8 @@
       "image": "mysql:8.0",
 	  "restart": "always",
 	  	"environment": {
-        "MYSQL_USER": "plantit",
-        "MYSQL_PASSWORD": "${MYSQL_PLANTIT_PASSWORD}",
         "MYSQL_DATABASE": "plantit",
-        "MYSQL_ROOT_PASSWORD": "${MYSQL_ROOT_PASSWORD}"
+        "MYSQL_ROOT_PASSWORD": "${MYSQL_PLANTIT_ROOT_PASSWORD}"
       },
       "volumes": [
         {
