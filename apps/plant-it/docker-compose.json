@@ -40,7 +40,7 @@
       ],
       "addPorts": [
         {
-          "hostPort": 428080,
+          "hostPort": 19383,
           "containerPort": 8080
         }
       ]
