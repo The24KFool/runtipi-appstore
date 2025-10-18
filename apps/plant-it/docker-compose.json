@@ -26,7 +26,7 @@
 		"CACHE_TTL": "86400",
 		"CACHE_PORT": "6379",
 		"SSL_ENABLED": "false",
-		"CERTIFICATE_PATH": "/certificates"
+		"CERTIFICATE_PATH": "/certificates",
         "CACHE_HOST": "plantit-cache"
       },
       "volumes": [
