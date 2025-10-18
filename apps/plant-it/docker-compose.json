@@ -11,7 +11,7 @@
 	  "environment": {
         "MYSQL_HOST": "plantit-db",
         "MYSQL_USERNAME": "plantit",
-        "MYSQL_PASSWORD": "${MYSQL_PLANTIT_PASSWORD}",
+        "MYSQL_PSW": "${MYSQL_PLANTIT_PASSWORD}",
         "MYSQL_DATABASE": "plantit",
         "MYSQL_ROOT_PASSWORD": "${MYSQL_ROOT_PASSWORD}",
 		"JWT_SECRET": "${JWT_SECRET}",
