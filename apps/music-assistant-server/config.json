@@ -1,0 +1,22 @@
+{
+  "name": "Music Assistant Server",
+  "id": "music-assistant-server",
+  "available": true,
+  "short_desc": "Music Assistant Server",
+  "author": "Open Home Foundation",
+  "port": 2020,
+  "categories": [
+    "media"
+  ],
+  "description": "Music Assistant Server",
+  "tipi_version": 1,
+  "version": "latest",
+  "source": "https://github.com/music-assistant/server",
+  "exposable": true,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "dynamic_config": true,
+  "form_fields": []
+}
