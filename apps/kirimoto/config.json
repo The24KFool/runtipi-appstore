@@ -1,0 +1,22 @@
+{
+  "name": "Gridspace KiriMoto",
+  "id": "kirimoto",
+  "available": true,
+  "short_desc": "is a browser-based Slicer for 3D printers, CNC mills, and Laser cutters",
+  "author": "GridSpace",
+  "port": 8080,
+  "categories": [
+    "utilities"
+  ],
+  "description": "is a browser-based Slicer for 3D printers, CNC mills, and Laser cutters",
+  "tipi_version": 1,
+  "version": "v0.3.8",
+  "source": "https://github.com/GridSpace/grid-apps",
+  "exposable": true,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "dynamic_config": true,
+  "form_fields": []
+}
