@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "trudesk",
-      "image": "polonel/trudesk:latest",
+      "image": "polonel/trudesk:1.2.11",
       "isMain": true,
 	  "restart": "always",
       "internalPort": 8118,
@@ -28,7 +28,7 @@
     },
     {
       "name": "trudesk-db",
-      "image": "mongo:5",
+      "image": "mongo:5.0.31",
 	  "restart": "always",
       "internalPort": 27017,
       "volumes": [
@@ -40,7 +40,7 @@
     },
     {
       "name": "trudesk-es",
-      "image": "elasticsearch:8.18.7",
+      "image": "elasticsearch:8.18.8",
 	  "restart": "always",
       "internalPort": 9200,
       "environment": {
