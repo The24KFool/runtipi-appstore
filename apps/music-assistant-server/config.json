@@ -9,7 +9,7 @@
     "media"
   ],
   "description": "Music Assistant Server",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "latest",
   "source": "https://github.com/music-assistant/server",
   "exposable": true,

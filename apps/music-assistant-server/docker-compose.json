@@ -5,11 +5,11 @@
       "isMain": true,
       "image": "ghcr.io/music-assistant/server:2.6.3",
       "name": "music-assistant-server",
-      "restart": "unless-stopped"
+      "restart": "unless-stopped",
       "internalPort": 8095,
 	  "networkMode": "host",
 	  "cap_add": ["SYS_ADMIN", "DAC_READ_SEARCH"],
-	  "securityOpt": ["apparmor:unconfined"]
+	  "securityOpt": ["apparmor:unconfined"],
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/music-assistant-server/data",
