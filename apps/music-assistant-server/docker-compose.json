@@ -7,6 +7,9 @@
       "name": "music-assistant-server",
       "restart": "unless-stopped",
       "internalPort": 8095,
+      "environment": {
+        "LOG_LEVEL": "info"
+      }
 	  "networkMode": "host",
 	  "cap_add": ["SYS_ADMIN", "DAC_READ_SEARCH"],
 	  "securityOpt": ["apparmor:unconfined"],
