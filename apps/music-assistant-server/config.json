@@ -4,12 +4,12 @@
   "available": true,
   "short_desc": "Music Assistant Server",
   "author": "Open Home Foundation",
-  "port": 2020,
+  "port": 8095,
   "categories": [
     "media"
   ],
   "description": "Music Assistant Server",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "latest",
   "source": "https://github.com/music-assistant/server",
   "exposable": true,
