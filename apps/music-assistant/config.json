@@ -1,0 +1,22 @@
+{
+  "name": "Music Assistant",
+  "available": true,
+  "port": 8095,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "music-assistant",
+  "description": "Music Assistant",
+  "tipi_version": 8,
+  "version": "2.6.3",
+  "categories": ["media"],
+  "short_desc": "Music Assistant",
+  "author": "Open Home Foundation",
+  "source": "https://github.com/music-assistant/server",
+  "website": "https://music-assistant.io/",
+  "form_fields": [],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1764643297579,
+  "updated_at": 1764643297579,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.5.0"
+}
