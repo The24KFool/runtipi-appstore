@@ -21,8 +21,7 @@
         }
       ],
       "capAdd": ["SYS_ADMIN", "DAC_READ_SEARCH"],
-      "securityOpt": ["apparmor:unconfined"],
-      "restart": "unless-stopped"
+      "securityOpt": ["apparmor:unconfined"]
     }
   ]
 }
