@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "music-assistant",
   "description": "Music Assistant",
-  "tipi_version": 13,
+  "tipi_version": 14,
   "version": "2.6.3",
   "categories": ["media"],
   "short_desc": "Music Assistant",

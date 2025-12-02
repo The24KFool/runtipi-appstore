@@ -7,7 +7,12 @@
       "image": "ghcr.io/music-assistant/server:2.6.3",
       "isMain": true,
       "internalPort": 8095,
-      "exposedPorts": [8095, 8097],
+      "addPorts": [
+        {
+          "hostPort": 8097,
+          "containerPort": 8097
+        }
+      ],
       "environment": [
         {
           "name": "LOG_LEVEL",
