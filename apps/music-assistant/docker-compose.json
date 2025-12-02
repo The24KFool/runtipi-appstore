@@ -10,7 +10,7 @@
       "networkMode": "host",
       "environment": [
         {
-          "name": "LOG_LEVEL",
+          "key": "LOG_LEVEL",
           "value": "info"
         }
       ],
