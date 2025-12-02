@@ -8,9 +8,9 @@
       "isMain": true,
       "internalPort": 8095,
       "networkMode": "host",
-      "environment": {
-        "LOG_LEVEL": "info"
-      },
+      "environment": [
+        "LOG_LEVEL=info"
+      ],
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/music-assistant/data",
