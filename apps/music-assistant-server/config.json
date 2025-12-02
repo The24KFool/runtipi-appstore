@@ -10,7 +10,7 @@
   ],
   "description": "Music Assistant Server",
   "tipi_version": 5,
-  "version": "latest",
+  "version": "2.6.3",
   "source": "https://github.com/music-assistant/server",
   "exposable": true,
   "supported_architectures": [
