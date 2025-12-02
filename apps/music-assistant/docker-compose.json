@@ -9,7 +9,10 @@
       "internalPort": 8095,
       "networkMode": "host",
       "environment": [
-        "LOG_LEVEL=info"
+        {
+          "name": "LOG_LEVEL",
+          "value": "info"
+        }
       ],
       "volumes": [
         {
