@@ -7,24 +7,18 @@
       "image": "ghcr.io/music-assistant/server:2.6.3",
       "isMain": true,
       "internalPort": 8095,
-      "addPorts": [
-        {
-          "hostPort": 8097,
-          "containerPort": 8097
-        }
-      ],
-      "environment": [
-        {
-          "name": "LOG_LEVEL",
-          "value": "info"
-        }
-      ],
+      "networkMode": "host",
+      "environment": {
+        "LOG_LEVEL": "info"
+      },
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/music-assistant/data",
           "containerPath": "/data/"
         }
       ],
+      "capAdd": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+      "securityOpt": ["apparmor:unconfined"],
       "restart": "unless-stopped"
     }
   ]

@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 2,
+  "$schema": "https://schemas.runtipi.io/v2/dynamic-compose.json",
+  "services": [
+    {
+      "name": "kopia",
+      "image": "kopia/kopia:0.22.3",
+      "isMain": true,
+      "internalPort": 51515,
+      "environment": [
+        {
+          "name": "KOPIA_PASSWORD",
+          "value": "SECRET"
+        },
+        {
+          "name": "USER",
+          "value": "User"
+        },
+      ],
+      "commands": [
+        "server",
+        "start",
+        "--disable-csrf-token-checks",
+        "--insecure",
+        "--address=0.0.0.0:51515",
+        "--server-username=USERNAME",
+        "--server-password=SECRET_PASSWORD"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/kopia/config",
+          "containerPath": "/app/config"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/kopia/cache",
+          "containerPath": "/app/cache"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/kopia/logs",
+          "containerPath": "/app/logs"
+        },
+        {
+          "hostPath": "${ROOT_FOLDER_HOST}",
+          "containerPath": "/backups/runtipi-folder": ro
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/kopia/logs",
+          "containerPath": "/tmp"
+        },
+      ],
+      "restart": "unless-stopped"
+    }
+  ]
+}
