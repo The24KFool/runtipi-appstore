@@ -1,0 +1,67 @@
+{
+  "$schema": "../dynamic-compose-schema.json",
+  "services": [
+    {
+      "name": "plant-it",
+      "image": "msdeluise/plant-it-server:latest",
+      "isMain": true,
+	  "restart": "unless-stopped",
+      "internalPort": 3000,
+      "dependsOn": ["plantit-db", "plantit-cache"],
+	  "environment": {
+        "MYSQL_HOST": "plantit-db",
+		"MYSQL_PORT": "3306",
+        "MYSQL_USERNAME": "root",
+		"MYSQL_PSW": "${MYSQL_PLANTIT_ROOT_PASSWORD}",
+		"MYSQL_DATABASE": "plantit",
+        "MYSQL_PASSWORD": "${MYSQL_PLANTIT_ROOT_PASSWORD}",
+		"JWT_SECRET": "${JWT_PLANTIT_SECRET}",
+		"JWT_EXP": "1",
+		"USERS_LIMIT": "-1",
+		"UPLOAD_DIR": "/upload-dir",
+		"API_PORT": "8080",
+		"LOG_LEVEL": "DEBUG",
+		"ALLOWED_ORIGINS": "*",
+		"CACHE_HOST": "plantit-cache",
+		"CACHE_PORT": "6379",
+		"CACHE_TTL": "86400"
+      },
+      "volumes": [
+		{
+          "hostPath": "${APP_DATA_DIR}/data/plantit/upload-dir",
+          "containerPath": "/upload-dir"
+        },
+		{
+          "hostPath": "${APP_DATA_DIR}/data/plantit/certificates",
+          "containerPath": "/certificates"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 19383,
+          "containerPort": 8080
+        }
+      ]
+    },
+    {
+      "name": "plantit-db",
+      "image": "mysql:8.0",
+	  "restart": "always",
+	  	"environment": {
+        "MYSQL_DATABASE": "plantit",
+        "MYSQL_ROOT_PASSWORD": "${MYSQL_PLANTIT_ROOT_PASSWORD}"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/mysql",
+          "containerPath": "/var/lib/mysql"
+        }
+      ]
+    },
+    {
+      "name": "plantit-cache",
+      "image": "redis:7.2",
+	  "restart": "always"
+    }
+  ]
+}
