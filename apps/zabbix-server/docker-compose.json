@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "zabbix-server-web",
-      "image": "zabbix/zabbix-web-apache-mysql:ubuntu-7.4.5",
+      "image": "zabbix/zabbix-web-apache-mysql:ubuntu-7.4.6",
       "isMain": true,
 	  "restart": "always",
       "internalPort": 8080,
@@ -17,7 +17,7 @@
     },
     {
       "name": "zabbix-server",
-      "image": "zabbix/zabbix-server-mysql:ubuntu-7.4.5",
+      "image": "zabbix/zabbix-server-mysql:ubuntu-7.4.6",
 	  "restart": "always",
       "dependsOn": ["zabbix-server-db"],
 	  "environment": {

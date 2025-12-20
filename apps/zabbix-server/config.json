@@ -9,8 +9,8 @@
     "utilities"
   ],
   "description": "Zabbix Server",
-  "tipi_version": 11,
-  "version": "ubuntu-7.4.5",
+  "tipi_version": 12,
+  "version": "ubuntu-7.4.6",
   "source": "https://github.com/zabbix",
   "form_fields": [
     {

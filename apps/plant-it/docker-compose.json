@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "plant-it",
-      "image": "msdeluise/plant-it-server:latest",
+      "image": "msdeluise/plant-it-server:1.0.0",
       "isMain": true,
 	  "restart": "unless-stopped",
       "internalPort": 3000,

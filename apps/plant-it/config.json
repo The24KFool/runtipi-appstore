@@ -10,7 +10,7 @@
   ],
   "description": "Plant-it",
   "tipi_version": 10,
-  "version": "latest",
+  "version": "1.0.0",
   "source": "https://github.com/MDeLuise/plant-it",
   "form_fields": [
     {
