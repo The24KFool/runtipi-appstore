@@ -4,6 +4,7 @@
       "name": "matrix-conduit",
       "image": "matrixconduit/matrix-conduit:v0.10.11",
       "isMain": true,
+      "internalPort": 6167,
       "environment": [
         {
           "key": "CONDUIT_CONFIG",
