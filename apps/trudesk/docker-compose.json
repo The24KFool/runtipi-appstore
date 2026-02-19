@@ -28,7 +28,7 @@
     },
     {
       "name": "trudesk-db",
-      "image": "mongo:5.0.31",
+      "image": "mongo:5.0.32",
 	  "restart": "always",
       "internalPort": 27017,
       "volumes": [
