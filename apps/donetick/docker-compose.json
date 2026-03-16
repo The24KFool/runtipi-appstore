@@ -7,23 +7,18 @@
       "image": "donetick/donetick:v0.1.74",
       "name": "donetick",
       "internalPort": 2021,
+      "networks": [
+        "tipi_main_network"
+      ],
       "environment": [
-        {
-          "key": "DT_ENV",
-          "value": "selfhosted"
-        },
-        {
-          "key": "DT_DATABASE_TYPE",
-          "value": "sqlite"
-        },
-        {
-          "key": "DT_SQLITE_PATH",
-          "value": "/donetick-data/donetick.db"
-        },
-        {
-          "key": "DT_JWT_SECRET",
-          "value": "${JWT_DONETICK_SECRET}"
-        }
+        { "key": "DT_ENV", "value": "selfhosted" },
+        { "key": "DT_CONFIG_PATH", "value": "/config" },
+        { "key": "DT_DATABASE_TYPE", "value": "sqlite" },
+        { "key": "DT_SQLITE_PATH", "value": "/donetick-data/donetick.db" },
+        { "key": "DT_JWT_SECRET", "value": "${JWT_DONETICK_SECRET}" },
+        { "key": "DT_SERVER_PORT", "value": "2021" },
+        { "key": "DT_SERVER_SERVE_FRONTEND", "value": "true" },
+        { "key": "DT_SERVER_CORS_ALLOW_ORIGINS", "value": "*" }
       ],
       "volumes": [
         {
