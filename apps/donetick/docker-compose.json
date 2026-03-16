@@ -13,6 +13,10 @@
           "value": "selfhosted"
         },
         {
+          "key": "DT_DATABASE_TYPE",
+          "value": "sqlite"
+        },
+        {
           "key": "DT_SQLITE_PATH",
           "value": "/donetick-data/donetick.db"
         },
