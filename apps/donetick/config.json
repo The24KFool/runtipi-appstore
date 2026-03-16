@@ -1,0 +1,22 @@
+{
+  "name": "Donetick",
+  "id": "donetick",
+  "available": true,
+  "short_desc": "Open-source task management made simple.",
+  "author": "Donetick",
+  "port": 2021,
+  "categories": [
+    "utilities"
+  ],
+  "description": "Open-source task management made simple. Organize your life, collaborate with your team, and stay on top of everything that matters.",
+  "tipi_version": 1,
+  "version": "0.1.74",
+  "source": "https://github.com/donetick/donetick",
+  "exposable": true,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "dynamic_config": true,
+  "form_fields": []
+}
