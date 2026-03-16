@@ -1,21 +1,16 @@
 {
   "$schema": "../dynamic-compose-schema.json",
+  "schemaVersion": 2,
   "services": [
     {
       "isMain": true,
       "image": "donetick/donetick:v0.1.74",
       "name": "donetick",
       "internalPort": 2021,
-      "environment": [
-        {
-          "key": "DT_ENV",
-          "value": "selfhosted"
-        },
-        {
-          "key": "DT_SQLITE_PATH",
-          "value": "/donetick-data/donetick.db"
-        }
-      ],
+      "environment": {
+        "DT_ENV": "selfhosted",
+        "DT_SQLITE_PATH": "/donetick-data/donetick.db"
+      },
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/donetick/data",
@@ -24,7 +19,7 @@
         {
           "hostPath": "${APP_DATA_DIR}/data/donetick/configs",
           "containerPath": "/config"
-        }		
+        }
       ]
     }
   ]
