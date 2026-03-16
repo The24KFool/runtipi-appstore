@@ -4,12 +4,12 @@
   "available": true,
   "short_desc": "Open-source task management made simple.",
   "author": "Donetick",
-  "port": 2021,
+  "port": 8211,
   "categories": [
     "utilities"
   ],
   "description": "Open-source task management made simple. Organize your life, collaborate with your team, and stay on top of everything that matters.",
-  "tipi_version": 6,
+  "tipi_version": 7,
   "version": "0.1.74",
   "source": "https://github.com/donetick/donetick",
   "form_fields": [

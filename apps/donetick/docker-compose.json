@@ -11,6 +11,7 @@
         "tipi_main_network"
       ],
       "environment": [
+        { "key": "DT_IS_DONE_TICK_DOT_COM", "value": "false" },
         { "key": "DT_ENV", "value": "selfhosted" },
         { "key": "DT_CONFIG_PATH", "value": "/config" },
         { "key": "DT_DATABASE_TYPE", "value": "sqlite" },
