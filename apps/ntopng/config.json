@@ -4,18 +4,16 @@
   "available": true,
   "short_desc": "High-speed traffic analysis and flow collector.",
   "author": "ntop",
-  "port": 3000,
+  "port": 32002,
   "categories": [
     "utilities"
   ],
-  "description": "ntopng is a network traffic probe that monitors network usage. It acts as a NetFlow/IPFIX collector for your EdgeRouter and Ubuntu nodes.",
-  "tipi_version": 3,
+  "description": "ntopng is a network traffic probe that monitors network usage. This version uses port 3001 to avoid Runtipi internal conflicts.",
   "version": "stable",
   "source": "https://github.com/ntop/ntopng",
   "exposable": true,
   "supported_architectures": [
     "amd64",
     "arm64"
-  ],
-  "dynamic_config": true
+  ]
 }
