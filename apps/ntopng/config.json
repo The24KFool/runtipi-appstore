@@ -5,10 +5,11 @@
   "short_desc": "High-speed traffic analysis and flow collector.",
   "author": "ntop",
   "port": 32002,
+  "tipi_version": 4,
   "categories": [
     "utilities"
   ],
-  "description": "ntopng is a network traffic probe that monitors network usage. This version uses port 3001 to avoid Runtipi internal conflicts.",
+  "description": "ntopng is a network traffic probe that monitors network usage. This version uses port 32002 to avoid Runtipi internal conflicts.",
   "version": "stable",
   "source": "https://github.com/ntop/ntopng",
   "exposable": true,
