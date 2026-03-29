@@ -5,17 +5,43 @@
     {
       "isMain": true,
       "image": "ntop/ntopng:stable",
+      "restart": "unless-stopped",
       "name": "ntopng",
       "internalPort": 3000,
+      "dependsOn": [
+        "ntopng-clickhouse",
+        "ntopng-netflow2ng"
+      ],
       "command": [
         "--community",
-        "-i", "collector:2055",
-        "-i", "collector:2056",
-        "-i", "collector:2057",
-        "-i", "collector:2058",
-        "-i", "collector:2059",
+        "-i", "tcp://ntopng-netflow2ng:5556",
+        "-F", "clickhouse;ntopng-clickhouse;ntopng;ntopng;${CLICKHOUSE_PASSWORD}",
+        "-r", "ntopng-redis:6379",
+        "-m", "192.168.0.0/16,10.0.0.0/8,100.64.0.0/10",
         "-w", "3000"
       ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/ntopng/data",
+          "containerPath": "/var/lib/ntopng"
+        }
+      ]
+    },
+    {
+      "name": "ntopng-redis",
+      "image": "redis:7-alpine",
+      "restart": "always",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/ntopng/redis",
+          "containerPath": "/data"
+        }
+      ]
+    },
+    {
+      "name": "ntopng-netflow2ng",
+      "image": "synfinatic/netflow2ng:latest",
+      "restart": "unless-stopped",
       "ports": [
         { "hostPort": 2055, "containerPort": 2055, "protocol": "udp" },
         { "hostPort": 2056, "containerPort": 2056, "protocol": "udp" },
@@ -23,10 +49,29 @@
         { "hostPort": 2058, "containerPort": 2058, "protocol": "udp" },
         { "hostPort": 2059, "containerPort": 2059, "protocol": "udp" }
       ],
+      "command": [
+        "-u", "2055,2056,2057,2058,2059",
+        "-p", "5556",
+        "--tlv"
+      ]
+    },
+    {
+      "name": "ntopng-clickhouse",
+      "image": "clickhouse/clickhouse-server:latest",
+      "restart": "unless-stopped",
+      "environment": [
+        { "key": "CLICKHOUSE_USER", "value": "ntopng" },
+        { "key": "CLICKHOUSE_PASSWORD", "value": "${CLICKHOUSE_PASSWORD}" },
+        { "key": "CLICKHOUSE_DB", "value": "ntopng" }
+      ],
       "volumes": [
         {
-          "hostPath": "${APP_DATA_DIR}/data/ntopng",
-          "containerPath": "/var/lib/ntopng"
+          "hostPath": "${APP_DATA_DIR}/data/ntopng/clickhouse/data",
+          "containerPath": "/var/lib/clickhouse"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/ntopng/clickhouse/log",
+          "containerPath": "/var/log/clickhouse-server"
         }
       ]
     }

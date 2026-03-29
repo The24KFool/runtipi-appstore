@@ -1,17 +1,26 @@
 {
-  "name": "ntopng",
+  "name": "ntopng-stack",
   "id": "ntopng",
   "available": true,
-  "short_desc": "High-speed web-based traffic analysis and flow collector.",
+  "short_desc": "ntopng",
   "author": "ntop",
   "port": 32002,
   "categories": [
     "utilities"
   ],
-  "description": "ntopng is a network traffic probe that monitors network usage.",
-  "tipi_version": 7,
+  "description": "ntopng",
+  "tipi_version": 10,
   "version": "stable",
   "source": "https://github.com/ntop/ntopng",
+  "form_fields": [
+    {
+      "type": "random",
+      "min": 32,
+      "max": 32,
+      "label": "Clickhouse Password",
+      "env_variable": "CLICKHOUSE_PASSWORD"
+    }
+  ],
   "exposable": true,
   "supported_architectures": [
     "amd64"
