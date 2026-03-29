@@ -1,11 +1,12 @@
 {
+  "$schema": "../dynamic-compose-schema.json",
   "schemaVersion": 2,
   "services": [
     {
-      "name": "ntopng",
+      "isMain": true,
       "image": "ntop/ntopng:stable",
-      "container_name": "ntopng",
-      "restart": "unless-stopped",
+      "name": "ntopng",
+      "internalPort": 3000,
       "command": [
         "--community",
         "-i", "collector:2055",
@@ -27,12 +28,7 @@
           "hostPath": "${APP_DATA_DIR}/data/ntopng",
           "containerPath": "/var/lib/ntopng"
         }
-      ],
-      "x-runtipi": {
-        "is_main": true,
-        "internal_port": 3000,
-        "schema_version": 2
-      }
+      ]
     }
   ]
 }
