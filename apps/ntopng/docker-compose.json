@@ -3,11 +3,11 @@
   "schemaVersion": 2,
   "services": [
     {
+      "name": "ntopng",
       "isMain": true,
+      "internalPort": 3000,
       "image": "ntop/ntopng:stable",
       "restart": "unless-stopped",
-      "name": "ntopng",
-      "internalPort": 3000,
       "dependsOn": [
         "ntopng-clickhouse",
         "ntopng-netflow2ng"
