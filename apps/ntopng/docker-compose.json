@@ -13,35 +13,15 @@
         "-i", "collector:2056",
         "-i", "collector:2057",
         "-i", "collector:2058",
-		"-i", "collector:2059",
+        "-i", "collector:2059",
         "-w", "3000"
       ],
       "ports": [
-        {
-          "containerPort": 2055,
-          "hostPort": 2055,
-          "protocol": "udp"
-        },
-        {
-          "containerPort": 2056,
-          "hostPort": 2056,
-          "protocol": "udp"
-        },
-        {
-          "containerPort": 2057,
-          "hostPort": 2057,
-          "protocol": "udp"
-        },
-        {
-          "containerPort": 2058,
-          "hostPort": 2058,
-          "protocol": "udp"
-        },
-        {
-          "containerPort": 2059,
-          "hostPort": 2059,
-          "protocol": "udp"
-        }	
+        { "containerPort": 2055, "hostPort": 2055, "protocol": "udp" },
+        { "containerPort": 2056, "hostPort": 2056, "protocol": "udp" },
+        { "containerPort": 2057, "hostPort": 2057, "protocol": "udp" },
+        { "containerPort": 2058, "hostPort": 2058, "protocol": "udp" },
+        { "containerPort": 2059, "hostPort": 2059, "protocol": "udp" }
       ],
       "volumes": [
         {
