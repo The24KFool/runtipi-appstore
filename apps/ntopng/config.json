@@ -4,8 +4,8 @@
   "available": true,
   "short_desc": "High-speed traffic analysis and flow collector.",
   "author": "ntop",
-  "port": 32002,
-  "tipi_version": 4,
+  "port": 3000,
+  "tipi_version": 5,
   "categories": [
     "utilities"
   ],

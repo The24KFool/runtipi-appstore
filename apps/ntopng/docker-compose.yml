@@ -1,31 +1,35 @@
-services:
-  ntopng:
-    image: ntop/ntopng:stable
-    container_name: ntopng
-    restart: unless-stopped
-    command:
-      - "--community"
-      - "-i"
-      - "collector:2055"
-      - "-i"
-      - "collector:2056"
-      - "-i"
-      - "collector:2057"
-      - "-i"
-      - "collector:2058"
-      - "-i"
-      - "collector:2059"
-      - "-w"
-      - "3001"
-    ports:
-      - "2055:2055/udp"
-      - "2056:2056/udp"
-      - "2057:2057/udp"
-      - "2058:2058/udp"
-      - "2059:2059/udp"
-    volumes:
-      - ${APP_DATA_DIR}/data/ntopng:/var/lib/ntopng
-    x-runtipi:
-      is_main: true
-      internal_port: 3000
-      schema_version: 2
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "ntopng",
+      "image": "ntop/ntopng:stable",
+      "container_name": "ntopng",
+      "restart": "unless-stopped",
+      "command": [
+        "--community",
+        "-i", "collector:2055",
+        "-i", "collector:2056",
+        "-i", "collector:2057",
+        "-i", "collector:2058",
+        "-i", "collector:2059",
+        "-w", "3000"
+      ],
+      "ports": [
+        "2055:2055/udp",
+        "2056:2056/udp",
+        "2057:2057/udp",
+        "2058:2058/udp",
+        "2059:2059/udp"
+      ],
+      "volumes": [
+        "${APP_DATA_DIR}/data/ntopng:/var/lib/ntopng"
+      ],
+      "x-runtipi": {
+        "is_main": true,
+        "internal_port": 3000,
+        "schema_version": 2
+      }
+    }
+  ]
+}
