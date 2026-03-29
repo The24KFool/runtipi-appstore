@@ -9,7 +9,7 @@
     "utilities"
   ],
   "description": "ntopng is a network traffic probe that monitors network usage. It acts as a NetFlow/IPFIX collector for your EdgeRouter and Ubuntu nodes.",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "stable",
   "source": "https://github.com/ntop/ntopng",
   "exposable": true,
