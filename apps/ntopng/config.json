@@ -1,0 +1,20 @@
+{
+  "name": "ntopng",
+  "id": "ntopng",
+  "available": true,
+  "short_desc": "High-speed web-based traffic analysis and flow collector.",
+  "author": "ntop",
+  "port": 3000,
+  "categories": [
+    "utilities"
+  ],
+  "description": "ntopng is a network traffic probe that monitors network usage. It acts as a NetFlow/IPFIX collector for your EdgeRouter and Ubuntu nodes.",
+  "tipi_version": 1,
+  "version": "stable",
+  "source": "https://github.com/ntop/ntopng",
+  "exposable": true,
+  "supported_architectures": [
+    "amd64"
+  ],
+  "dynamic_config": true
+}
