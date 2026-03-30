@@ -1,15 +1,15 @@
 {
-  "name": "ntopng-stack",
+  "name": "ntopng",
   "id": "ntopng",
   "available": true,
   "short_desc": "ntopng",
   "author": "ntop",
-  "port": 3000,
+  "port": 3080,
   "categories": [
     "utilities"
   ],
   "description": "ntopng",
-  "tipi_version": 11,
+  "tipi_version": 12,
   "version": "stable",
   "source": "https://github.com/ntop/ntopng",
   "form_fields": [

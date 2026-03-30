@@ -5,20 +5,21 @@
     {
       "name": "ntopng",
       "isMain": true,
-      "internalPort": 3000,
+      "internalPort": 3080,
       "image": "ntop/ntopng:stable",
       "restart": "unless-stopped",
       "dependsOn": [
-        "ntopng-clickhouse",
+        "ntopng-redis",
+		"ntopng-clickhouse",
         "ntopng-netflow2ng"
       ],
       "command": [
         "--community",
-        "-i", "tcp://ntopng-netflow2ng:5556",
+        "-i", "zmq://ntopng-netflow2ng:5556",
         "-F", "clickhouse;ntopng-clickhouse;ntopng;ntopng;${CLICKHOUSE_PASSWORD}",
         "-r", "ntopng-redis:6379",
-        "-m", "192.168.0.0/16,10.0.0.0/8,100.64.0.0/10",
-        "-w", "3000"
+        "-m", "192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10",
+        "-w", "3080"
       ],
       "volumes": [
         {
@@ -49,6 +50,7 @@
         { "hostPort": 2058, "containerPort": 2058, "protocol": "udp" },
         { "hostPort": 2059, "containerPort": 2059, "protocol": "udp" }
       ],
+	  "entrypoint": "/netflow2ng"
       "command": [
         "-u", "2055,2056,2057,2058,2059",
         "-p", "5556",
