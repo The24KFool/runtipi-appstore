@@ -4,7 +4,7 @@
   "services": [
     {
       "isMain": true,
-      "image": "donetick/donetick:v0.1.74",
+      "image": "donetick/donetick:v0.1.75",
       "name": "donetick",
       "internalPort": 2021,
       "networks": [
