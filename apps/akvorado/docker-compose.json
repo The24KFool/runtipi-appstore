@@ -78,9 +78,6 @@
       "name": "akvorado-clickhouse",
       "image": "clickhouse/clickhouse-server:26.3.12.3",
       "restart": "unless-stopped",
-      "cap_add": [
-        "SYS_NICE"
-      ],
       "environment": [
         { "key": "CLICKHOUSE_USER", "value": "akvorado" },
         { "key": "CLICKHOUSE_PASSWORD", "value": "${CLICKHOUSE_PASSWORD}" },
