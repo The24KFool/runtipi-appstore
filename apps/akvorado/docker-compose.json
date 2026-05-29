@@ -21,14 +21,11 @@
           "protocol": "udp" 
         }
       ],
-      "command": [
-        "daemon",
-        "/config/akvorado.yaml"
-      ],
+      "command": "orchestrator /etc/akvorado/akvorado.yaml",
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/akvorado/config",
-          "containerPath": "/config"
+          "containerPath": "/etc/akvorado"
         },
         {
           "hostPath": "${APP_DATA_DIR}/data/akvorado/geoip",
