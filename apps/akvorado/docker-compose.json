@@ -1,7 +1,8 @@
 {
-  "version": "3.8",
-  "services": {
-    "akvorado-orchestrator": {
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "akvorado-orchestrator",
       "image": "akvorado/akvorado-orchestrator:v2.4.0",
       "container_name": "akvorado-orchestrator-1",
       "restart": "always",
@@ -16,7 +17,8 @@
         "tipi_main_network"
       ]
     },
-    "akvorado-inlet": {
+    {
+      "name": "akvorado-inlet",
       "image": "akvorado/akvorado-inlet:v2.4.0",
       "container_name": "akvorado-inlet-1",
       "restart": "always",
@@ -39,7 +41,8 @@
         "tipi_main_network"
       ]
     },
-    "akvorado-outlet": {
+    {
+      "name": "akvorado-outlet",
       "image": "akvorado/akvorado-outlet:v2.4.0",
       "container_name": "akvorado-outlet-1",
       "restart": "always",
@@ -51,7 +54,8 @@
         "tipi_main_network"
       ]
     },
-    "akvorado-console": {
+    {
+      "name": "akvorado-console",
       "image": "akvorado/akvorado-console:v2.4.0",
       "container_name": "akvorado-console-1",
       "restart": "always",
@@ -66,7 +70,8 @@
         "tipi_main_network"
       ]
     },
-    "akvorado-kafka": {
+    {
+      "name": "akvorado-kafka",
       "image": "apache/kafka:4.2.1",
       "container_name": "akvorado-kafka-1",
       "restart": "always",
@@ -86,7 +91,8 @@
         "tipi_main_network"
       ]
     },
-    "akvorado-clickhouse": {
+    {
+      "name": "akvorado-clickhouse",
       "image": "clickhouse/clickhouse-server:latest",
       "container_name": "akvorado-clickhouse-1",
       "restart": "always",
@@ -103,5 +109,5 @@
         "tipi_main_network"
       ]
     }
-  }
+  ]
 }
