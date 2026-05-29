@@ -1,22 +1,13 @@
 {
-  "schemaVersion": 2,
-  "services": [
-    {
-      "name": "akvorado-orchestrator",
+  "version": "3.8",
+  "services": {
+    "akvorado-orchestrator": {
       "image": "akvorado/akvorado-orchestrator:v2.4.0",
       "container_name": "akvorado-orchestrator-1",
       "restart": "always",
       "volumes": [
-        {
-          "hostPath": "${APP_DATA_DIR}/akvorado.yaml",
-          "containerPath": "/etc/akvorado/akvorado.yaml",
-          "readOnly": true
-        },
-        {
-          "hostPath": "${APP_DATA_DIR}/GeoIP",
-          "containerPath": "/usr/share/GeoIP",
-          "readOnly": true
-        }
+        "${APP_DATA_DIR}/akvorado.yaml:/etc/akvorado/akvorado.yaml:ro",
+        "${APP_DATA_DIR}/GeoIP:/usr/share/GeoIP:ro"
       ],
       "ports": [
         "8080:8080"
@@ -25,15 +16,17 @@
         "tipi_main_network"
       ]
     },
-    {
-      "name": "akvorado-inlet",
+    "akvorado-inlet": {
       "image": "akvorado/akvorado-inlet:v2.4.0",
       "container_name": "akvorado-inlet-1",
       "restart": "always",
       "cap_add": [
         "NET_ADMIN",
-        "SYS_ADMIN"
+        "BPF"
       ],
+      "ulimits": {
+        "memlock": -1
+      },
       "ports": [
         "2055:2055/udp",
         "6343:6343/udp"
@@ -46,8 +39,7 @@
         "tipi_main_network"
       ]
     },
-    {
-      "name": "akvorado-outlet",
+    "akvorado-outlet": {
       "image": "akvorado/akvorado-outlet:v2.4.0",
       "container_name": "akvorado-outlet-1",
       "restart": "always",
@@ -59,8 +51,7 @@
         "tipi_main_network"
       ]
     },
-    {
-      "name": "akvorado-console",
+    "akvorado-console": {
       "image": "akvorado/akvorado-console:v2.4.0",
       "container_name": "akvorado-console-1",
       "restart": "always",
@@ -75,56 +66,42 @@
         "tipi_main_network"
       ]
     },
-    {
-      "name": "akvorado-kafka",
+    "akvorado-kafka": {
       "image": "apache/kafka:4.2.1",
       "container_name": "akvorado-kafka-1",
       "restart": "always",
-      "environment": [
-        "KAFKA_NODE_ID=1",
-        "KAFKA_PROCESS_ROLES=broker,controller",
-        "KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093",
-        "KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://akvorado-kafka:9092",
-        "KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER",
-        "KAFKA_CONTROLLER_QUORUM_VOTERS=1@127.0.0.1:9093",
-        "KAFKA_LOG_DIRS=/var/lib/kafka/data"
-      ],
+      "environment": {
+        "KAFKA_NODE_ID": "1",
+        "KAFKA_PROCESS_ROLES": "broker,controller",
+        "KAFKA_LISTENERS": "PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093",
+        "KAFKA_ADVERTISED_LISTENERS": "PLAINTEXT://akvorado-kafka:9092",
+        "KAFKA_CONTROLLER_LISTENER_NAMES": "CONTROLLER",
+        "KAFKA_CONTROLLER_QUORUM_VOTERS": "1@127.0.0.1:9093",
+        "KAFKA_LOG_DIRS": "/var/lib/kafka/data"
+      },
       "volumes": [
-        {
-          "hostPath": "${APP_DATA_DIR}/kafka-data",
-          "containerPath": "/var/lib/kafka/data",
-          "readOnly": false
-        }
+        "${APP_DATA_DIR}/kafka-data:/var/lib/kafka/data"
       ],
       "networks": [
         "tipi_main_network"
       ]
     },
-    {
-      "name": "akvorado-clickhouse",
+    "akvorado-clickhouse": {
       "image": "clickhouse/clickhouse-server:latest",
       "container_name": "akvorado-clickhouse-1",
       "restart": "always",
-      "environment": [
-        "CLICKHOUSE_DB=akvorado",
-        "CLICKHOUSE_USER=akvorado",
-        "CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}"
-      ],
+      "environment": {
+        "CLICKHOUSE_DB": "akvorado",
+        "CLICKHOUSE_USER": "akvorado",
+        "CLICKHOUSE_PASSWORD": "222bd514a9ee254da47e58f993dd583c"
+      },
       "volumes": [
-        {
-          "hostPath": "${APP_DATA_DIR}/clickhouse-data",
-          "containerPath": "/var/lib/clickhouse",
-          "readOnly": false
-        },
-        {
-          "hostPath": "${APP_DATA_DIR}/clickhouse-logs",
-          "containerPath": "/var/log/clickhouse-server",
-          "readOnly": false
-        }
+        "${APP_DATA_DIR}/clickhouse-data:/var/lib/clickhouse",
+        "${APP_DATA_DIR}/clickhouse-logs:/var/log/clickhouse-server"
       ],
       "networks": [
         "tipi_main_network"
       ]
     }
-  ]
+  }
 }
