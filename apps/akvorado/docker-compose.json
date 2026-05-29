@@ -7,8 +7,16 @@
       "container_name": "akvorado-orchestrator-1",
       "restart": "always",
       "volumes": [
-        "${APP_DATA_DIR}/akvorado.yaml:/etc/akvorado/akvorado.yaml:ro",
-        "${APP_DATA_DIR}/GeoIP:/usr/share/GeoIP:ro"
+        {
+          "hostPath": "${APP_DATA_DIR}/akvorado.yaml",
+          "containerPath": "/etc/akvorado/akvorado.yaml",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/GeoIP",
+          "containerPath": "/usr/share/GeoIP",
+          "readOnly": true
+        }
       ],
       "ports": [
         "8080:8080"
@@ -24,11 +32,8 @@
       "restart": "always",
       "cap_add": [
         "NET_ADMIN",
-        "BPF"
+        "SYS_ADMIN"
       ],
-      "ulimits": {
-        "memlock": -1
-      },
       "ports": [
         "2055:2055/udp",
         "6343:6343/udp"
@@ -85,7 +90,11 @@
         "KAFKA_LOG_DIRS": "/var/lib/kafka/data"
       },
       "volumes": [
-        "${APP_DATA_DIR}/kafka-data:/var/lib/kafka/data"
+        {
+          "hostPath": "${APP_DATA_DIR}/kafka-data",
+          "containerPath": "/var/lib/kafka/data",
+          "readOnly": false
+        }
       ],
       "networks": [
         "tipi_main_network"
@@ -102,8 +111,16 @@
         "CLICKHOUSE_PASSWORD": "222bd514a9ee254da47e58f993dd583c"
       },
       "volumes": [
-        "${APP_DATA_DIR}/clickhouse-data:/var/lib/clickhouse",
-        "${APP_DATA_DIR}/clickhouse-logs:/var/log/clickhouse-server"
+        {
+          "hostPath": "${APP_DATA_DIR}/clickhouse-data",
+          "containerPath": "/var/lib/clickhouse",
+          "readOnly": false
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/clickhouse-logs",
+          "containerPath": "/var/log/clickhouse-server",
+          "readOnly": false
+        }
       ],
       "networks": [
         "tipi_main_network"
