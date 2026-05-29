@@ -34,7 +34,7 @@
     },
     {
       "name": "akvorado-geoip",
-      "image": "maxmindinc/geoipupdate:7.1",
+      "image": "maxmindinc/geoipupdate:v7.1",
       "restart": "unless-stopped",
       "environment": [
         { "key": "GEOIPUPDATE_ACCOUNT_ID", "value": "${MAXMIND_ACCOUNT_ID}" },
