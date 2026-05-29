@@ -1,0 +1,29 @@
+{
+  "name": "akvorado",
+  "id": "akvorado",
+  "available": true,
+  "short_desc": "Network flow collector, enricher, and visualizer",
+  "author": "akvorado",
+  "port": 8080,
+  "categories": [
+    "utilities"
+  ],
+  "description": "Akvorado receives NetFlow/IPFIX/sFlow data from your network devices, enriches it with interface metadata (via SNMP) and GeoIP lookups, saves it to ClickHouse, and renders data via a web dashboard.",
+  "tipi_version": 1,
+  "version": "2.4.0",
+  "source": "https://github.com/akvorado/akvorado",
+  "form_fields": [
+    {
+      "type": "random",
+      "min": 32,
+      "max": 32,
+      "label": "Clickhouse Password",
+      "env_variable": "CLICKHOUSE_PASSWORD"
+    }
+  ],
+  "exposable": true,
+  "supported_architectures": [
+    "amd64"
+  ],
+  "dynamic_config": true
+}
