@@ -9,7 +9,7 @@
     "utilities"
   ],
   "description": "Akvorado receives NetFlow/IPFIX/sFlow data from your network devices, enriches it with interface metadata (via SNMP) and GeoIP lookups, saves it to ClickHouse, and renders data via a web dashboard.",
-  "tipi_version": 9,
+  "tipi_version": 10,
   "version": "2.4.0",
   "source": "https://github.com/akvorado/akvorado",
   "form_fields": [
