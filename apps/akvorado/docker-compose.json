@@ -80,15 +80,15 @@
       "image": "apache/kafka:4.2.1",
       "container_name": "akvorado-kafka-1",
       "restart": "always",
-      "environment": {
-        "KAFKA_NODE_ID": "1",
-        "KAFKA_PROCESS_ROLES": "broker,controller",
-        "KAFKA_LISTENERS": "PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093",
-        "KAFKA_ADVERTISED_LISTENERS": "PLAINTEXT://akvorado-kafka:9092",
-        "KAFKA_CONTROLLER_LISTENER_NAMES": "CONTROLLER",
-        "KAFKA_CONTROLLER_QUORUM_VOTERS": "1@127.0.0.1:9093",
-        "KAFKA_LOG_DIRS": "/var/lib/kafka/data"
-      },
+      "environment": [
+        "KAFKA_NODE_ID=1",
+        "KAFKA_PROCESS_ROLES=broker,controller",
+        "KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093",
+        "KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://akvorado-kafka:9092",
+        "KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER",
+        "KAFKA_CONTROLLER_QUORUM_VOTERS=1@127.0.0.1:9093",
+        "KAFKA_LOG_DIRS=/var/lib/kafka/data"
+      ],
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/kafka-data",
@@ -105,11 +105,11 @@
       "image": "clickhouse/clickhouse-server:latest",
       "container_name": "akvorado-clickhouse-1",
       "restart": "always",
-      "environment": {
-        "CLICKHOUSE_DB": "akvorado",
-        "CLICKHOUSE_USER": "akvorado",
-        "CLICKHOUSE_PASSWORD": "222bd514a9ee254da47e58f993dd583c"
-      },
+      "environment": [
+        "CLICKHOUSE_DB=akvorado",
+        "CLICKHOUSE_USER=akvorado",
+        "CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}"
+      ],
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/clickhouse-data",
