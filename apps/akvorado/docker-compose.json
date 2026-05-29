@@ -36,7 +36,7 @@
           "protocol": "udp" 
         }
       ],
-      "command": "inlet http://akvorado-orchestrator:8080",
+      "command": "inlet --profile inlet-profile http://akvorado-orchestrator:8080",
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/akvorado/run",
@@ -53,7 +53,11 @@
         "akvorado-kafka",
         "akvorado-clickhouse"
       ],
-      "command": "outlet http://akvorado-orchestrator:8080",
+      "command": "outlet --profile outlet-profile http://akvorado-orchestrator:8080",
+      "environment": [
+        { "key": "AKVORADO_CFG_OUTLET_METADATA_CACHEPERSISTFILE", "value": "/run/akvorado/metadata.cache" },
+        { "key": "AKVORADO_CFG_OUTLET_FLOW_STATEPERSISTFILE", "value": "/run/akvorado/flow.state" }
+      ],
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/akvorado/run",
@@ -73,6 +77,10 @@
         "akvorado-clickhouse"
       ],
       "command": "console http://akvorado-orchestrator:8080",
+      "environment": [
+        { "key": "AKVORADO_CFG_CONSOLE_DATABASE_DSN", "value": "/run/akvorado/console.sqlite" },
+        { "key": "AKVORADO_CFG_CONSOLE_BRANDING", "value": "false" }
+      ],
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/akvorado/console-db",
@@ -109,11 +117,14 @@
         { "key": "KAFKA_CONTROLLER_LISTENER_NAMES", "value": "CONTROLLER" },
         { "key": "KAFKA_LISTENER_SECURITY_PROTOCOL_MAP", "value": "CONTROLLER:PLAINTEXT,CLIENT:PLAINTEXT" },
         { "key": "KAFKA_INTER_BROKER_LISTENER_NAME", "value": "CLIENT" },
-        { "key": "KAFKA_CONTROLLER_QUORUM_VOTERS", "value": "1@localhost:9093" },
+        { "key": "KAFKA_CONTROLLER_QUORUM_VOTERS", "value": "1@akvorado-kafka:9093" },
         { "key": "KAFKA_LOG_DIRS", "value": "/var/lib/kafka/data" },
         { "key": "KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR", "value": "1" },
         { "key": "KAFKA_TRANSACTION_STATE_LOG_MIN_ISR", "value": "1" },
-        { "key": "KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR", "value": "1" }
+        { "key": "KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR", "value": "1" },
+        { "key": "KAFKA_SHARE_COORDINATOR_STATE_TOPIC_REPLICATION_FACTOR", "value": "1" },
+        { "key": "KAFKA_SHARE_COORDINATOR_STATE_TOPIC_MIN_ISR", "value": "1" },
+        { "key": "KAFKA_DELETE_TOPIC_ENABLE", "value": "true" }
       ],
       "volumes": [
         {
