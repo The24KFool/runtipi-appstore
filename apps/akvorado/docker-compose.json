@@ -22,7 +22,7 @@
         }
       ],
       "command": [
-        "-c", 
+        "daemon",
         "/config/akvorado.yaml"
       ],
       "volumes": [
