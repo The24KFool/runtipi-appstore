@@ -3,23 +3,11 @@
   "schemaVersion": 2,
   "services": [
     {
-      "name": "akvorado",
-      "isMain": true,
-      "internalPort": 8080,
+      "name": "akvorado-orchestrator",
       "image": "quay.io/akvorado/akvorado:2.4.0",
       "restart": "unless-stopped",
       "dependsOn": [
-        "akvorado-clickhouse",
-        "akvorado-kafka",
-        "akvorado-geoip",
-        "akvorado-redis"
-      ],
-      "ports": [
-        { 
-          "hostPort": 2055, 
-          "containerPort": 2055, 
-          "protocol": "udp" 
-        }
+        "akvorado-kafka"
       ],
       "command": "orchestrator /etc/akvorado/akvorado.yaml",
       "volumes": [
@@ -30,6 +18,65 @@
         {
           "hostPath": "${APP_DATA_DIR}/data/akvorado/geoip",
           "containerPath": "/usr/share/GeoIP"
+        }
+      ]
+    },
+    {
+      "name": "akvorado-inlet",
+      "image": "quay.io/akvorado/akvorado:2.4.0",
+      "restart": "unless-stopped",
+      "dependsOn": [
+        "akvorado-orchestrator",
+        "akvorado-kafka"
+      ],
+      "ports": [
+        { 
+          "hostPort": 2055, 
+          "containerPort": 2055, 
+          "protocol": "udp" 
+        }
+      ],
+      "command": "inlet http://akvorado-orchestrator:8080",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/akvorado/run",
+          "containerPath": "/run/akvorado"
+        }
+      ]
+    },
+    {
+      "name": "akvorado-outlet",
+      "image": "quay.io/akvorado/akvorado:2.4.0",
+      "restart": "unless-stopped",
+      "dependsOn": [
+        "akvorado-orchestrator",
+        "akvorado-kafka",
+        "akvorado-clickhouse"
+      ],
+      "command": "outlet http://akvorado-orchestrator:8080",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/akvorado/run",
+          "containerPath": "/run/akvorado"
+        }
+      ]
+    },
+    {
+      "name": "akvorado-console",
+      "isMain": true,
+      "internalPort": 8080,
+      "image": "quay.io/akvorado/akvorado:2.4.0",
+      "restart": "unless-stopped",
+      "dependsOn": [
+        "akvorado-orchestrator",
+        "akvorado-redis",
+        "akvorado-clickhouse"
+      ],
+      "command": "console http://akvorado-orchestrator:8080",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/akvorado/console-db",
+          "containerPath": "/run/akvorado"
         }
       ]
     },
