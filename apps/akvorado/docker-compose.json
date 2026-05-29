@@ -1,163 +1,107 @@
 {
-  "$schema": "../dynamic-compose-schema.json",
-  "schemaVersion": 2,
-  "services": [
-    {
-      "name": "akvorado-orchestrator",
-      "image": "quay.io/akvorado/akvorado:2.4.0",
-      "restart": "unless-stopped",
-      "dependsOn": [
-        "akvorado-kafka"
-      ],
-      "command": "orchestrator /etc/akvorado/akvorado.yaml",
+  "version": "3.8",
+  "services": {
+    "akvorado-orchestrator": {
+      "image": "akvorado/akvorado-orchestrator:v2.4.0",
+      "container_name": "akvorado-orchestrator-1",
+      "restart": "always",
       "volumes": [
-        {
-          "hostPath": "${APP_DATA_DIR}/data/akvorado/config",
-          "containerPath": "/etc/akvorado"
-        },
-        {
-          "hostPath": "${APP_DATA_DIR}/data/akvorado/geoip",
-          "containerPath": "/usr/share/GeoIP"
-        }
-      ]
-    },
-    {
-      "name": "akvorado-inlet",
-      "image": "quay.io/akvorado/akvorado:2.4.0",
-      "restart": "unless-stopped",
-      "dependsOn": [
-        "akvorado-orchestrator",
-        "akvorado-kafka"
+        "${APP_DATA_DIR}/akvorado.yaml:/etc/akvorado/akvorado.yaml:ro",
+        "${APP_DATA_DIR}/GeoIP:/usr/share/GeoIP:ro"
       ],
       "ports": [
-        { 
-          "hostPort": 2055, 
-          "containerPort": 2055, 
-          "protocol": "udp" 
-        }
+        "8080:8080"
       ],
-      "command": "inlet http://akvorado-orchestrator:8080",
-      "volumes": [
-        {
-          "hostPath": "${APP_DATA_DIR}/data/akvorado/run",
-          "containerPath": "/run/akvorado"
-        }
+      "networks": [
+        "tipi_main_network"
       ]
     },
-    {
-      "name": "akvorado-outlet",
-      "image": "quay.io/akvorado/akvorado:2.4.0",
-      "restart": "unless-stopped",
-      "dependsOn": [
-        "akvorado-orchestrator",
-        "akvorado-kafka",
-        "akvorado-clickhouse"
+    "akvorado-inlet": {
+      "image": "akvorado/akvorado-inlet:v2.4.0",
+      "container_name": "akvorado-inlet-1",
+      "restart": "always",
+      "cap_add": [
+        "NET_ADMIN",
+        "BPF"
       ],
-      "command": "outlet http://akvorado-orchestrator:8080",
-      "volumes": [
-        {
-          "hostPath": "${APP_DATA_DIR}/data/akvorado/run",
-          "containerPath": "/run/akvorado"
-        }
+      "ulimits": {
+        "memlock": -1
+      },
+      "ports": [
+        "2055:2055/udp",
+        "6343:6343/udp"
+      ],
+      "command": [
+        "-orchestrator-url",
+        "http://akvorado-orchestrator:8080"
+      ],
+      "networks": [
+        "tipi_main_network"
       ]
     },
-    {
-      "name": "akvorado-console",
-      "isMain": true,
-      "internalPort": 8080,
-      "image": "quay.io/akvorado/akvorado:2.4.0",
-      "restart": "unless-stopped",
-      "dependsOn": [
-        "akvorado-orchestrator",
-        "akvorado-redis",
-        "akvorado-clickhouse"
+    "akvorado-outlet": {
+      "image": "akvorado/akvorado-outlet:v2.4.0",
+      "container_name": "akvorado-outlet-1",
+      "restart": "always",
+      "command": [
+        "-orchestrator-url",
+        "http://akvorado-orchestrator:8080"
       ],
-      "command": "console http://akvorado-orchestrator:8080",
-      "volumes": [
-        {
-          "hostPath": "${APP_DATA_DIR}/data/akvorado/console-db",
-          "containerPath": "/run/akvorado"
-        }
+      "networks": [
+        "tipi_main_network"
       ]
     },
-    {
-      "name": "akvorado-geoip",
-      "image": "maxmindinc/geoipupdate:v7.1",
-      "restart": "unless-stopped",
-      "environment": [
-        { "key": "GEOIPUPDATE_ACCOUNT_ID", "value": "${MAXMIND_ACCOUNT_ID}" },
-        { "key": "GEOIPUPDATE_LICENSE_KEY", "value": "${MAXMIND_LICENSE_KEY}" },
-        { "key": "GEOIPUPDATE_EDITION_IDS", "value": "GeoLite2-ASN GeoLite2-Country GeoLite2-City" },
-        { "key": "GEOIPUPDATE_FREQUENCY", "value": "48" }
+    "akvorado-console": {
+      "image": "akvorado/akvorado-console:v2.4.0",
+      "container_name": "akvorado-console-1",
+      "restart": "always",
+      "ports": [
+        "8000:8000"
       ],
-      "volumes": [
-        {
-          "hostPath": "${APP_DATA_DIR}/data/akvorado/geoip",
-          "containerPath": "/usr/share/GeoIP"
-        }
+      "command": [
+        "-orchestrator-url",
+        "http://akvorado-orchestrator:8080"
+      ],
+      "networks": [
+        "tipi_main_network"
       ]
     },
-    {
-      "name": "akvorado-kafka",
-      "image": "apache/kafka-native:4.2.1",
-      "restart": "unless-stopped",
-      "environment": [
-        { "key": "KAFKA_NODE_ID", "value": "1" },
-        { "key": "KAFKA_PROCESS_ROLES", "value": "broker,controller" },
-        { "key": "KAFKA_LISTENERS", "value": "CLIENT://:9092,CONTROLLER://:9093" },
-        { "key": "KAFKA_ADVERTISED_LISTENERS", "value": "CLIENT://akvorado-kafka:9092" },
-        { "key": "KAFKA_CONTROLLER_LISTENER_NAMES", "value": "CONTROLLER" },
-        { "key": "KAFKA_LISTENER_SECURITY_PROTOCOL_MAP", "value": "CONTROLLER:PLAINTEXT,CLIENT:PLAINTEXT" },
-        { "key": "KAFKA_INTER_BROKER_LISTENER_NAME", "value": "CLIENT" },
-        { "key": "KAFKA_CONTROLLER_QUORUM_VOTERS", "value": "1@localhost:9093" },
-        { "key": "KAFKA_LOG_DIRS", "value": "/var/lib/kafka/data" },
-        { "key": "KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR", "value": "1" },
-        { "key": "KAFKA_TRANSACTION_STATE_LOG_MIN_ISR", "value": "1" },
-        { "key": "KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR", "value": "1" }
-      ],
+    "akvorado-kafka": {
+      "image": "apache/kafka:4.2.1",
+      "container_name": "akvorado-kafka-1",
+      "restart": "always",
+      "environment": {
+        "KAFKA_NODE_ID": "1",
+        "KAFKA_PROCESS_ROLES": "broker,controller",
+        "KAFKA_LISTENERS": "PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093",
+        "KAFKA_ADVERTISED_LISTENERS": "PLAINTEXT://akvorado-kafka:9092",
+        "KAFKA_CONTROLLER_LISTENER_NAMES": "CONTROLLER",
+        "KAFKA_CONTROLLER_QUORUM_VOTERS": "1@127.0.0.1:9093",
+        "KAFKA_LOG_DIRS": "/var/lib/kafka/data"
+      },
       "volumes": [
-        {
-          "hostPath": "${APP_DATA_DIR}/data/akvorado/kafka",
-          "containerPath": "/var/lib/kafka/data"
-        }
+        "${APP_DATA_DIR}/kafka-data:/var/lib/kafka/data"
+      ],
+      "networks": [
+        "tipi_main_network"
       ]
     },
-    {
-      "name": "akvorado-clickhouse",
-      "image": "clickhouse/clickhouse-server:26.3.12.3",
-      "restart": "unless-stopped",
-      "environment": [
-        { "key": "CLICKHOUSE_USER", "value": "akvorado" },
-        { "key": "CLICKHOUSE_PASSWORD", "value": "${CLICKHOUSE_PASSWORD}" },
-        { "key": "CLICKHOUSE_DB", "value": "akvorado" },
-        { "key": "CLICKHOUSE_INIT_TIMEOUT", "value": "60" },
-        { "key": "CLICKHOUSE_SKIP_USER_SETUP", "value": "1" }
+    "akvorado-clickhouse": {
+      "image": "clickhouse/clickhouse-server:latest",
+      "container_name": "akvorado-clickhouse-1",
+      "restart": "always",
+      "environment": {
+        "CLICKHOUSE_DB": "akvorado",
+        "CLICKHOUSE_USER": "akvorado",
+        "CLICKHOUSE_PASSWORD": "222bd514a9ee254da47e58f993dd583c"
+      },
+      "volumes": [
+        "${APP_DATA_DIR}/clickhouse-data:/var/lib/clickhouse",
+        "${APP_DATA_DIR}/clickhouse-logs:/var/log/clickhouse-server"
       ],
-      "volumes": [
-        {
-          "hostPath": "${APP_DATA_DIR}/data/akvorado/clickhouse/data",
-          "containerPath": "/var/lib/clickhouse"
-        },
-        {
-          "hostPath": "${APP_DATA_DIR}/data/akvorado/clickhouse/log",
-          "containerPath": "/var/log/clickhouse-server"
-        },
-        {
-          "hostPath": "${APP_DATA_DIR}/data/akvorado/clickhouse/akvorado.xml",
-          "containerPath": "/etc/clickhouse-server/config.d/akvorado.xml"
-        }
-      ]
-    },
-    {
-      "name": "akvorado-redis",
-      "image": "redis:7",
-      "restart": "unless-stopped",
-      "volumes": [
-        {
-          "hostPath": "${APP_DATA_DIR}/data/akvorado/redis",
-          "containerPath": "/data"
-        }
+      "networks": [
+        "tipi_main_network"
       ]
     }
-  ]
+  }
 }
