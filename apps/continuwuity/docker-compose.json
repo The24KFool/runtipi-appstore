@@ -44,26 +44,11 @@
       "image": "livekit/livekit-server:latest",
 	  "command": ["--config", "/etc/livekit.yaml"],
 	  "restart": "unless-stopped",
+	  "hostNetwork": true,
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/livekit/etc/livekit.yaml",
           "containerPath": "/etc/livekit.yaml"
-        }
-      ],
-      "addPorts": [
-        {
-          "hostPort": 7880,
-          "containerPort": 7880
-        },
-       {
-          "hostPort": 7881,
-          "containerPort": 7881
-        },
-       {
-          "hostPort": 50100-50200,
-          "containerPort": 50100-50200,
-		  "tcp": false,
-		  "udp": true
         }
       ]
     },
@@ -71,6 +56,7 @@
       "name": "continuwuity-coturn",
       "image": "docker.io/coturn/coturn",
 	  "restart": "unless-stopped",
+	  "hostNetwork": true,
       "environment": {
         "DETECT_EXTERNAL_IP": "yes",
 		"DETECT_RELAY_IP": "yes"
@@ -79,34 +65,6 @@
         {
           "hostPath": "${APP_DATA_DIR}/coturn/turnserver.conf",
           "containerPath": "/etc/coturn/turnserver.conf"
-        }
-      ],
-      "addPorts": [
-        {
-          "hostPort": 3478,
-          "containerPort": 3478
-        },
-        {
-          "hostPort": 3478,
-          "containerPort": 3478,
-		  "tcp": false,
-		  "udp": true
-        },
-        {
-          "hostPort": 5349,
-          "containerPort": 5349
-        },
-        {
-          "hostPort": 5349,
-          "containerPort": 5349,
-		  "tcp": false,
-		  "udp": true
-        },
-       {
-          "hostPort": 49160-49200,
-          "containerPort": 49160-49200,
-		  "tcp": false,
-		  "udp": true
         }
       ]
     }
