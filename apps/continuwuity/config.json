@@ -4,12 +4,12 @@
   "available": true,
   "short_desc": "A community-driven Matrix homeserver in Rust",
   "author": "continuwuity",
-  "port": 8118,
+  "port": 8008,
   "categories": [
     "social"
   ],
   "description": "A community-driven Matrix homeserver in Rust",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "latest",
   "source": "https://github.com/continuwuity/continuwuity",
   "form_fields": [

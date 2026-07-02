@@ -7,7 +7,6 @@
       "isMain": true,
 	  "restart": "always",
       "internalPort": 8008,
-      "dependsOn": ["continuwuity-livekit-jwt", "continuwuity-livekit", "continuwuity-coturn"],
       "environment": {
         "CONTINUWUITY_SERVER_NAME": "${HOMESERVER}",
         "CONTINUWUITY_DATABASE_PATH": "/var/lib/continuwuity",
