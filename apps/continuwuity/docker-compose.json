@@ -1,19 +1,18 @@
 {
-  "$schema": "../dynamic-compose-schema.json",
-  "services": [
-    {
-      "name": "continuwuity",
+  "schemaVersion": 2,
+  "services": {
+    "continuwuity": {
       "image": "ghcr.io/continuwuity/continuwuity:latest",
       "isMain": true,
       "restart": "always",
       "internalPort": 8008,
       "dependsOn": ["continuwuity-livekit-jwt", "continuwuity-livekit", "continuwuity-coturn"],
-      "environment": [
-        { "key": "CONTINUWUITY_SERVER_NAME", "value": "${HOMESERVER}" },
-        { "key": "CONTINUWUITY_DATABASE_PATH", "value": "/var/lib/continuwuity" },
-        { "key": "CONTINUWUITY_ADDRESS", "value": "0.0.0.0" },
-        { "key": "CONTINUWUITY_ALLOW_FEDERATION", "value": "false" }
-      ],
+      "environment": {
+        "CONTINUWUITY_SERVER_NAME": "${HOMESERVER}",
+        "CONTINUWUITY_DATABASE_PATH": "/var/lib/continuwuity",
+        "CONTINUWUITY_ADDRESS": "0.0.0.0",
+        "CONTINUWUITY_ALLOW_FEDERATION": "false"
+      },
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/var/lib/continuwuity",
@@ -21,27 +20,24 @@
         }
       ]
     },
-    {
-      "name": "continuwuity-livekit-jwt",
+    "continuwuity-livekit-jwt": {
       "image": "ghcr.io/element-hq/lk-jwt-service:latest",
       "restart": "unless-stopped",
-      "environment": [
-        { "key": "LIVEKIT_JWT_BIND", "value": ":8081" },
-        { "key": "LIVEKIT_URL", "value": "wss://livekit.${HOMESERVER}" },
-        { "key": "LIVEKIT_FULL_ACCESS_HOMESERVERS", "value": "${HOMESERVER}" },
-        { "key": "LIVEKIT_KEY", "value": "${LK_MATRIX_KEY}" },
-        { "key": "LIVEKIT_SECRET", "value": "${LK_MATRIX_SECRET}" }
-      ],
+      "environment": {
+        "LIVEKIT_JWT_BIND": ":8081",
+        "LIVEKIT_URL": "wss://livekit.${HOMESERVER}",
+        "LIVEKIT_FULL_ACCESS_HOMESERVERS": "${HOMESERVER}",
+        "LIVEKIT_KEY": "${LK_MATRIX_KEY}",
+        "LIVEKIT_SECRET": "${LK_MATRIX_SECRET}"
+      },
       "addPorts": [
         {
           "hostPort": 8081,
-          "containerPort": 8081,
-          "protocol": "tcp"
+          "containerPort": 8081
         }
       ]
     },
-    {
-      "name": "continuwuity-livekit",
+    "continuwuity-livekit": {
       "image": "livekit/livekit-server:latest",
       "command": ["--config", "/etc/livekit.yaml"],
       "restart": "unless-stopped",
@@ -53,18 +49,17 @@
         }
       ],
       "addPorts": [
-        { "hostPort": 7880, "containerPort": 7880, "protocol": "tcp" },
-        { "hostPort": 7881, "containerPort": 7881, "protocol": "tcp" }
+        { "hostPort": 7880, "containerPort": 7880 },
+        { "hostPort": 7881, "containerPort": 7881 }
       ]
     },
-    {
-      "name": "continuwuity-coturn",
+    "continuwuity-coturn": {
       "image": "docker.io/coturn/coturn",
       "restart": "unless-stopped",
-      "environment": [
-        { "key": "DETECT_EXTERNAL_IP", "value": "yes" },
-        { "key": "DETECT_RELAY_IP", "value": "yes" }
-      ],
+      "environment": {
+        "DETECT_EXTERNAL_IP": "yes",
+        "DETECT_RELAY_IP": "yes"
+      },
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/coturn/turnserver.conf",
@@ -73,9 +68,9 @@
         }
       ],
       "addPorts": [
-        { "hostPort": 3478, "containerPort": 3478, "protocol": "tcp" },
-        { "hostPort": 5349, "containerPort": 5349, "protocol": "tcp" }
+        { "hostPort": 3478, "containerPort": 3478 },
+        { "hostPort": 5349, "containerPort": 5349 }
       ]
     }
-  ]
+  }
 }
