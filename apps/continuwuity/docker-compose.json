@@ -58,6 +58,12 @@
        {
           "hostPort": 7881,
           "containerPort": 7881
+        },
+       {
+          "hostPort": "50100-50200",
+          "containerPort": "50100-50200",
+		  "tcp": false,
+		  "udp": true
         }
       ]
     },
@@ -81,8 +87,26 @@
           "containerPort": 3478
         },
         {
+          "hostPort": 3478,
+          "containerPort": 3478,
+		  "tcp": false,
+		  "udp": true
+        },
+        {
           "hostPort": 5349,
           "containerPort": 5349
+        },
+        {
+          "hostPort": 5349,
+          "containerPort": 5349,
+		  "tcp": false,
+		  "udp": true
+        },
+       {
+          "hostPort": "49160-49200",
+          "containerPort": "49160-49200",
+		  "tcp": false,
+		  "udp": true
         }
       ]
     }
