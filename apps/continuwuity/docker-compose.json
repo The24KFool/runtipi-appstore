@@ -44,7 +44,7 @@
       "image": "livekit/livekit-server:latest",
 	  "command": ["--config", "/etc/livekit.yaml"],
 	  "restart": "unless-stopped",
-	  "hostNetwork": true,
+	  "networkMode": "host",
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/livekit/etc/livekit.yaml",
@@ -56,7 +56,7 @@
       "name": "continuwuity-coturn",
       "image": "docker.io/coturn/coturn",
 	  "restart": "unless-stopped",
-	  "hostNetwork": true,
+	  "networkMode": "host",
       "environment": {
         "DETECT_EXTERNAL_IP": "yes",
 		"DETECT_RELAY_IP": "yes"
