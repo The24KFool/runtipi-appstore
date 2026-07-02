@@ -1,0 +1,45 @@
+{
+  "name": "Continuwuity",
+  "id": "continuwuity",
+  "available": true,
+  "short_desc": "A community-driven Matrix homeserver in Rust",
+  "author": "continuwuity",
+  "port": 8118,
+  "categories": [
+    "social"
+  ],
+  "description": "A community-driven Matrix homeserver in Rust",
+  "tipi_version": 1,
+  "version": "latest",
+  "source": "https://github.com/continuwuity/continuwuity",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Homeserver",
+      "max": 50,
+      "min": 3,
+      "required": true,
+      "env_variable": "HOMESERVER"
+    },
+    {
+      "type": "random",
+      "min": 20,
+      "max": 20,
+      "label": "LiveKit Matrix Key",
+      "env_variable": "LK_MATRIX_KEY"
+    },
+    {
+      "type": "random",
+      "min": 64,
+      "max": 64,
+      "label": "LiveKit Matrix Secret",
+      "env_variable": "LK_MATRIX_SECRET"
+    }
+  ],
+  "exposable": true,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "dynamic_config": true
+}

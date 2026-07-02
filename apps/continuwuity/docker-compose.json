@@ -1,0 +1,105 @@
+{
+  "$schema": "../dynamic-compose-schema.json",
+  "services": [
+    {
+      "name": "continuwuity",
+      "image": "ghcr.io/continuwuity/continuwuity:latest",
+      "isMain": true,
+	  "restart": "always",
+      "internalPort": 8008,
+      "dependsOn": ["continuwuity-livekit-jwt", "continuwuity-livekit", "continuwuity-coturn"],
+      "environment": {
+        "CONTINUWUITY_SERVER_NAME": "${HOMESERVER}",
+        "CONTINUWUITY_DATABASE_PATH": "/var/lib/continuwuity",
+        "CONTINUWUITY_ADDRESS": "0.0.0.0",
+        "CONTINUWUITY_ALLOW_FEDERATION": "false"
+      },
+      "volumes": [
+		{
+          "hostPath": "${APP_DATA_DIR}/var/lib/continuwuity",
+          "containerPath": "/var/lib/continuwuity"
+        }
+      ]
+    },
+    {
+      "name": "continuwuity-livekit-jwt",
+      "image": "ghcr.io/element-hq/lk-jwt-service:latest",
+	  "restart": "unless-stopped",
+      "environment": {
+        "LIVEKIT_JWT_BIND": ":8081",
+        "LIVEKIT_URL": "wss://livekit.${HOMESERVER}",
+        "LIVEKIT_FULL_ACCESS_HOMESERVERS": "${HOMESERVER}",
+        "LIVEKIT_KEY": "${LK_MATRIX_KEY}",
+        "LIVEKIT_SECRET": "${LK_MATRIX_SECRET}"
+      },
+      "addPorts": [
+        {
+          "hostPort": 8081,
+          "containerPort": 8081
+        }
+      ]
+    },
+    {
+      "name": "continuwuity-livekit",
+      "image": "livekit/livekit-server:latest",
+	  "restart": "unless-stopped",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/livekit/etc/livekit.yaml",
+          "containerPath": "/etc/livekit.yaml"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 7880,
+          "containerPort": 7880
+        },
+       {
+          "hostPort": 7881,
+          "containerPort": 7881
+        },
+       {
+          "hostPort": "50100-50200/udp",
+          "containerPort": "50100-50200/udp"
+        }
+      ]
+    },
+    {
+      "name": "continuwuity-coturn",
+      "image": "docker.io/coturn/coturn",
+	  "restart": "unless-stopped",
+      "environment": {
+        "DETECT_EXTERNAL_IP": "yes",
+		"DETECT_RELAY_IP": "yes"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/coturn/turnserver.conf",
+          "containerPath": "/etc/coturn/turnserver.conf"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 3478,
+          "containerPort": 3478
+        },
+       {
+          "hostPort": "3478/udp",
+          "containerPort": "3478/udp"
+        },
+        {
+          "hostPort": 5349,
+          "containerPort": 5349
+        },
+       {
+          "hostPort": "5349/udp",
+          "containerPort": "5349/udp"
+        },
+       {
+          "hostPort": "49160-49200/udp",
+          "containerPort": "49160-49200/udp"
+        }
+      ]
+    }
+  ]
+}
