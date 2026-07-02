@@ -88,7 +88,7 @@
        {
           "hostPort": 3478,
           "containerPort": 3478,
-		  "protocol": "udp"
+		  "udp": false
         },
         {
           "hostPort": 5349,
@@ -97,12 +97,12 @@
        {
           "hostPort": 5349,
           "containerPort": 5349,
-		  "protocol": "udp"
+		  "udp": false
         },
        {
           "hostPorts": "49160-49200",
           "containerPorts": "49160-49200",
-		  "protocol": "udp"
+		  "udp": false
         }
       ]
     }
