@@ -61,6 +61,7 @@
       "image": "docker.io/coturn/coturn",
 	  "restart": "unless-stopped",
 	  "networkMode": "host",
+	  "command": ["--min-port=49160", "--max-port=49200"],
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/coturn/turnserver.conf",
