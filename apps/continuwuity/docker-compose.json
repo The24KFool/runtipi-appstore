@@ -11,13 +11,17 @@
       "environment": {
         "CONTINUWUITY_SERVER_NAME": "${HOMESERVER}",
         "CONTINUWUITY_DATABASE_PATH": "/var/lib/continuwuity",
+		"CONTINUWUITY_CONFIG": "/etc/continuwuity/continuwuity.toml",
         "CONTINUWUITY_ADDRESS": "0.0.0.0",
-        "CONTINUWUITY_ALLOW_FEDERATION": "false"
       },
       "volumes": [
 		{
-          "hostPath": "${APP_DATA_DIR}/var/lib/continuwuity",
+          "hostPath": "${APP_DATA_DIR}/continuwuity/var/lib/continuwuity",
           "containerPath": "/var/lib/continuwuity"
+        },
+		{
+          "hostPath": "${APP_DATA_DIR}/continuwuity/etc/continuwuity/continuwuity.toml",
+          "containerPath": "/etc/continuwuity/continuwuity.toml"
         }
       ]
     },
@@ -27,7 +31,7 @@
 	  "restart": "unless-stopped",
       "environment": {
         "LIVEKIT_JWT_BIND": ":8081",
-        "LIVEKIT_URL": "wss://livekit.${HOMESERVER}",
+        "LIVEKIT_URL": "wss://matrix-rtc.${HOMESERVER}",
         "LIVEKIT_FULL_ACCESS_HOMESERVERS": "${HOMESERVER}",
         "LIVEKIT_KEY": "${LK_MATRIX_KEY}",
         "LIVEKIT_SECRET": "${LK_MATRIX_SECRET}"
@@ -57,10 +61,6 @@
       "image": "docker.io/coturn/coturn",
 	  "restart": "unless-stopped",
 	  "networkMode": "host",
-      "environment": {
-        "DETECT_EXTERNAL_IP": "yes",
-		"DETECT_RELAY_IP": "yes"
-      },
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/coturn/turnserver.conf",

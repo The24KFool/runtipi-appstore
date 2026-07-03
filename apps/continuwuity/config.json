@@ -9,7 +9,7 @@
     "social"
   ],
   "description": "A community-driven Matrix homeserver in Rust",
-  "tipi_version": 15,
+  "tipi_version": 16,
   "version": "latest",
   "source": "https://github.com/continuwuity/continuwuity",
   "form_fields": [
