@@ -34,7 +34,7 @@
           "hostPath": "${APP_DATA_DIR}/cinny/opt/cinny/dist/config.json",
           "containerPath": "/opt/cinny/dist/config.json"
         }
-      ]
+      ],
       "addPorts": [
         {
           "hostPort": 8780,
