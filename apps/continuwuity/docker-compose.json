@@ -6,7 +6,6 @@
       "image": "ghcr.io/continuwuity/continuwuity:latest",
       "isMain": true,
 	  "restart": "always",
-	  "networkMode": "host",
       "internalPort": 8008,
       "dependsOn": ["continuwuity-livekit-jwt", "continuwuity-livekit", "continuwuity-coturn"],
       "environment": {
@@ -47,14 +46,13 @@
       "name": "continuwuity-livekit-jwt",
       "image": "ghcr.io/element-hq/lk-jwt-service:latest",
 	  "restart": "unless-stopped",
-	  "networkMode": "host",
       "environment": {
         "LIVEKIT_URL": "wss://matrix-rtc.${HOMESERVER}",
         "LIVEKIT_KEY": "${LK_MATRIX_KEY}",
         "LIVEKIT_SECRET": "${LK_MATRIX_SECRET}",
         "LIVEKIT_JWT_BIND": ":8081",
         "LIVEKIT_FULL_ACCESS_HOMESERVERS": "${HOMESERVER}",
-		"LIVEKIT_CS_API_URL_OVERRIDES": "${HOMESERVER}=http://localhost:8008"
+		"LIVEKIT_CS_API_URL_OVERRIDES": "${HOMESERVER}=http://continuwuity:8008"
       },
       "addPorts": [
         {
