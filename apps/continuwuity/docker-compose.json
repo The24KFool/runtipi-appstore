@@ -47,11 +47,12 @@
       "image": "ghcr.io/element-hq/lk-jwt-service:latest",
 	  "restart": "unless-stopped",
       "environment": {
-        "LIVEKIT_JWT_BIND": ":8081",
         "LIVEKIT_URL": "wss://matrix-rtc.${HOMESERVER}",
-        "LIVEKIT_FULL_ACCESS_HOMESERVERS": "${HOMESERVER}",
         "LIVEKIT_KEY": "${LK_MATRIX_KEY}",
-        "LIVEKIT_SECRET": "${LK_MATRIX_SECRET}"
+        "LIVEKIT_SECRET": "${LK_MATRIX_SECRET}",
+        "LIVEKIT_JWT_BIND": ":8081",
+        "LIVEKIT_FULL_ACCESS_HOMESERVERS": "${HOMESERVER}",
+		"LIVEKIT_CS_API_URL_OVERRIDES": "${HOMESERVER}=http://continuwuity:8008"
       },
       "addPorts": [
         {
