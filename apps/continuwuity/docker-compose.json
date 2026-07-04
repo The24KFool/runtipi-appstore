@@ -26,6 +26,23 @@
       ]
     },
     {
+      "name": "continuwuity-cinny",
+      "image": "ajbura/cinny:latest",
+	  "restart": "unless-stopped",
+      "volumes": [
+		{
+          "hostPath": "${APP_DATA_DIR}/cinny/opt/cinny/dist/config.json",
+          "containerPath": "/opt/cinny/dist/config.json"
+        }
+      ]
+      "addPorts": [
+        {
+          "hostPort": 8780,
+          "containerPort": 80
+        }
+      ]
+    },
+    {
       "name": "continuwuity-livekit-jwt",
       "image": "ghcr.io/element-hq/lk-jwt-service:latest",
 	  "restart": "unless-stopped",
@@ -58,7 +75,7 @@
     },
     {
       "name": "continuwuity-coturn",
-      "image": "docker.io/coturn/coturn",
+      "image": "coturn/coturn",
 	  "restart": "unless-stopped",
 	  "networkMode": "host",
       "volumes": [
