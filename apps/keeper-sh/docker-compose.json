@@ -1,45 +1,22 @@
 {
   "$schema": "../dynamic-compose-schema.json",
+  "schemaVersion": 2,
   "services": [
     {
       "isMain": true,
       "image": "ghcr.io/ridafkih/keeper-services:latest",
       "name": "keeper",
       "internalPort": 3000,
-      "environment": [
-        {
-          "key": "DATABASE_URL",
-          "value": "postgres://keeper:${KEEPER_DB_PASSWORD}@keeper-db:5432/keeper"
-        },
-        {
-          "key": "REDIS_URL",
-          "value": "redis://keeper-redis:6379"
-        },
-        {
-          "key": "WORKER_JOB_QUEUE_ENABLED",
-          "value": "true"
-        },
-        {
-          "key": "ENCRYPTION_KEY",
-          "value": "${KEEPER_ENCRYPTION_KEY}"
-        },
-        {
-          "key": "BETTER_AUTH_URL",
-          "value": "http://localhost:${APP_PORT}"
-        },
-        {
-          "key": "BETTER_AUTH_SECRET",
-          "value": "${KEEPER_AUTH_SECRET}"
-        },
-        {
-          "key": "MICROSOFT_CLIENT_ID",
-          "value": "${MICROSOFT_CLIENT_ID}"
-        },
-        {
-          "key": "MICROSOFT_CLIENT_SECRET",
-          "value": "${MICROSOFT_CLIENT_SECRET}"
-        }
-      ],
+      "environment": {
+        "DATABASE_URL": "postgres://keeper:${KEEPER_DB_PASSWORD}@keeper-db:5432/keeper",
+        "REDIS_URL": "redis://keeper-redis:6379",
+        "WORKER_JOB_QUEUE_ENABLED": "true",
+        "ENCRYPTION_KEY": "${KEEPER_ENCRYPTION_KEY}",
+        "BETTER_AUTH_URL": "http://localhost:${APP_PORT}",
+        "BETTER_AUTH_SECRET": "${KEEPER_AUTH_SECRET}",
+        "MICROSOFT_CLIENT_ID": "${MICROSOFT_CLIENT_ID}",
+        "MICROSOFT_CLIENT_SECRET": "${MICROSOFT_CLIENT_SECRET}"
+      },
       "depends_on": [
         "keeper-db",
         "keeper-redis"
@@ -48,20 +25,11 @@
     {
       "image": "postgres:17",
       "name": "keeper-db",
-      "environment": [
-        {
-          "key": "POSTGRES_USER",
-          "value": "keeper"
-        },
-        {
-          "key": "POSTGRES_PASSWORD",
-          "value": "${KEEPER_DB_PASSWORD}"
-        },
-        {
-          "key": "POSTGRES_DB",
-          "value": "keeper"
-        }
-      ],
+      "environment": {
+        "POSTGRES_USER": "keeper",
+        "POSTGRES_PASSWORD": "${KEEPER_DB_PASSWORD}",
+        "POSTGRES_DB": "keeper"
+      },
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/postgres",
