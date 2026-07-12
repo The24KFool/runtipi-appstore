@@ -1,11 +1,16 @@
 {
   "$schema": "../dynamic-compose-schema.json",
+  "schemaVersion": 2,
   "services": [
     {
-      "isMain": true,
-      "image": "ghcr.io/ridafkih/keeper-services:latest",
       "name": "keeper",
+      "image": "ghcr.io/ridafkih/keeper-services:latest",
+      "isMain": true,
       "internalPort": 3000,
+      "dependsOn": [
+        "keeper-db",
+        "keeper-redis"
+      ],
       "environment": {
         "DATABASE_URL": "postgres://keeper:${KEEPER_DB_PASSWORD}@keeper-db:5432/keeper",
         "REDIS_URL": "redis://keeper-redis:6379",
@@ -15,29 +20,16 @@
         "BETTER_AUTH_SECRET": "${KEEPER_AUTH_SECRET}",
         "MICROSOFT_CLIENT_ID": "${MICROSOFT_CLIENT_ID}",
         "MICROSOFT_CLIENT_SECRET": "${MICROSOFT_CLIENT_SECRET}"
-      },
-      "depends_on": [
-        "keeper-db",
-        "keeper-redis"
-      ]
+      }
     },
     {
-      "image": "postgres:17",
       "name": "keeper-db",
-      "environment": [
-        {
-          "key": "POSTGRES_USER",
-          "value": "keeper"
-        },
-        {
-          "key": "POSTGRES_PASSWORD",
-          "value": "${KEEPER_DB_PASSWORD}"
-        },
-        {
-          "key": "POSTGRES_DB",
-          "value": "keeper"
-        }
-      ],
+      "image": "postgres:17",
+      "environment": {
+        "POSTGRES_USER": "keeper",
+        "POSTGRES_PASSWORD": "${KEEPER_DB_PASSWORD}",
+        "POSTGRES_DB": "keeper"
+      },
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/postgres",
@@ -46,8 +38,8 @@
       ]
     },
     {
-      "image": "redis:7",
-      "name": "keeper-redis"
+      "name": "keeper-redis",
+      "image": "redis:7"
     }
   ]
 }
