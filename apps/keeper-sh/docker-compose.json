@@ -7,14 +7,8 @@
       "isMain": true,
       "internalPort": 3000,
       "dependsOn": [
-        {
-          "service": "keeper-db",
-          "condition": "service_started"
-        },
-        {
-          "service": "keeper-redis",
-          "condition": "service_started"
-        }
+        "keeper-db",
+        "keeper-redis"
       ],
       "environment": {
         "DATABASE_URL": "postgres://keeper:${KEEPER_DB_PASSWORD}@keeper-db:5432/keeper",
@@ -30,20 +24,11 @@
     {
       "name": "keeper-db",
       "image": "postgres:17",
-      "environment": [
-        {
-          "key": "POSTGRES_USER",
-          "value": "keeper"
-        },
-        {
-          "key": "POSTGRES_PASSWORD",
-          "value": "${KEEPER_DB_PASSWORD}"
-        },
-        {
-          "key": "POSTGRES_DB",
-          "value": "keeper"
-        }
-      ],
+      "environment": {
+        "POSTGRES_USER": "keeper",
+        "POSTGRES_PASSWORD": "${KEEPER_DB_PASSWORD}",
+        "POSTGRES_DB": "keeper"
+      },
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/postgres",
