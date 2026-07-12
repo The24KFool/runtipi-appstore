@@ -8,8 +8,14 @@
       "isMain": true,
       "internalPort": 3000,
       "dependsOn": [
-        "keeper-db",
-        "keeper-redis"
+        {
+          "service": "keeper-db",
+          "condition": "service_started"
+        },
+        {
+          "service": "keeper-redis",
+          "condition": "service_started"
+        }
       ],
       "environment": {
         "DATABASE_URL": "postgres://keeper:${KEEPER_DB_PASSWORD}@keeper-db:5432/keeper",
