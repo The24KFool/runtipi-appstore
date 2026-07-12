@@ -1,6 +1,5 @@
 {
   "$schema": "../dynamic-compose-schema.json",
-  "schemaVersion": 2,
   "services": [
     {
       "name": "keeper",
@@ -31,11 +30,20 @@
     {
       "name": "keeper-db",
       "image": "postgres:17",
-      "environment": {
-        "POSTGRES_USER": "keeper",
-        "POSTGRES_PASSWORD": "${KEEPER_DB_PASSWORD}",
-        "POSTGRES_DB": "keeper"
-      },
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "keeper"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "${KEEPER_DB_PASSWORD}"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "keeper"
+        }
+      ],
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/postgres",

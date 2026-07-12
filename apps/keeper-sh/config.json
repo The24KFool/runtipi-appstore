@@ -9,7 +9,7 @@
     "utilities"
   ],
   "description": "Keeper acts as a universal calendar proxy. It allows you to pull events from sources like a Microsoft 365 Family calendar, anonymize or pass full details, and expose them as a clean iCal/ICS link for Home Assistant or other platforms.",
-  "tipi_version": 6,
+  "tipi_version": 7,
   "version": "2.12.2",
   "source": "https://github.com/ridafkih/keeper.sh",
   "exposable": true,
