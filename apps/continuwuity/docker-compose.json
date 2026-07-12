@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "continuwuity",
-      "image": "ghcr.io/continuwuity/continuwuity:latest",
+      "image": "forgejo.ellis.link/continuwuation/continuwuity:latest",
       "isMain": true,
 	  "restart": "always",
       "internalPort": 8008,

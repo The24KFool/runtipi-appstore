@@ -1,0 +1,54 @@
+{
+  "name": "Keeper.sh",
+  "id": "KeeperSh",
+  "available": true,
+  "short_desc": "Keeper is a simple, open-source calendar syncing tool. Aggregate, sync, and control calendars across Microsoft 365, Google, iCloud, or CalDAV.",
+  "author": "Rida F'kih",
+  "port": 50480,
+  "categories": [
+    "utilities"
+  ],
+  "description": "Keeper acts as a universal calendar proxy. It allows you to pull events from sources like a Microsoft 365 Family calendar, anonymize or pass full details, and expose them as a clean iCal/ICS link for Home Assistant or other platforms.",
+  "tipi_version": 1,
+  "version": "2.12.2",
+  "source": "https://github.com/ridafkih/keeper.sh",
+  "exposable": true,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "dynamic_config": true,
+  "form_fields": [
+    {
+      "type": "random",
+      "min": 32,
+      "max": 32,
+      "label": "Keeper Encryption Key",
+      "env_variable": "KEEPER_ENCRYPTION_KEY"
+    },
+    {
+      "type": "random",
+      "min": 32,
+      "max": 32,
+      "label": "Better Auth Secret",
+      "env_variable": "KEEPER_AUTH_SECRET"
+    },
+    {
+      "type": "random",
+      "min": 16,
+      "max": 24,
+      "label": "Database Password",
+      "env_variable": "KEEPER_DB_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Microsoft Outlook Client ID",
+      "env_variable": "MICROSOFT_CLIENT_ID"
+    },
+    {
+      "type": "text",
+      "label": "Microsoft Outlook Client Secret",
+      "env_variable": "MICROSOFT_CLIENT_SECRET"
+    },	
+  ]
+}
