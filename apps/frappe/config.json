@@ -1,15 +1,15 @@
 {
-  "name": "Frappe",
+  "name": "Frappe Learning",
   "id": "frappe",
   "available": true,
-  "short_desc": "A better Moodle.",
+  "short_desc": "Easy to use, open source, Learning Management System",
   "author": "Frappe Technologies",
   "port": 8000,
   "categories": [
     "media"
   ],
-  "description": "A better Moodle.",
-  "tipi_version": 6,
+  "description": "Frappe Learning is an easy-to-use learning system that helps you bring structure to your content.",
+  "tipi_version": 7,
   "version": "latest",
   "source": "https://github.com/frappe/lms",
   "exposable": true,
