@@ -1,0 +1,21 @@
+{
+  "$schema": "../dynamic-compose-schema.json",
+  "services": [
+    {
+      "name": "caddy",
+      "image": "caddy:2.11.4-alpine",
+      "isMain": true,
+      "internalPort": 443,
+      "environment": {
+        "DATABASE_URL": "postgres://keeper:${KEEPER_DB_PASSWORD}@keeper-db:5432/keeper",
+        "REDIS_URL": "redis://keeper-redis:6379",
+        "WORKER_JOB_QUEUE_ENABLED": "true",
+        "ENCRYPTION_KEY": "${KEEPER_ENCRYPTION_KEY}",
+        "BETTER_AUTH_URL": "http://localhost:${APP_PORT}",
+        "BETTER_AUTH_SECRET": "${KEEPER_AUTH_SECRET}",
+        "MICROSOFT_CLIENT_ID": "${MICROSOFT_CLIENT_ID}",
+        "MICROSOFT_CLIENT_SECRET": "${MICROSOFT_CLIENT_SECRET}"
+      }
+    }
+  ]
+}

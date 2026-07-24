@@ -1,0 +1,22 @@
+{
+  "name": "Caddy",
+  "id": "Caddy",
+  "available": true,
+  "short_desc": "The Ultimate Server makes your sites more secure, more reliable, and more scalable than any other solution.",
+  "author": "ZeroSSL",
+  "port": 50481,
+  "categories": [
+    "utilities"
+  ],
+  "description": "The Ultimate Server makes your sites more secure, more reliable, and more scalable than any other solution.",
+  "tipi_version": 1,
+  "version": "2.11.4",
+  "source": "https://github.com/caddyserver/caddy",
+  "exposable": true,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "dynamic_config": true,
+  "form_fields": []
+}

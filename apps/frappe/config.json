@@ -1,0 +1,31 @@
+{
+  "name": "Frappe LMS",
+  "id": "frappe",
+  "available": true,
+  "short_desc": "Learning Management System built on Frappe",
+  "author": "Frappe Technologies",
+  "port": 8000,
+  "categories": [
+    "utilities"
+  ],
+  "description": "A fully featured open-source learning management system.",
+  "tipi_version": 1,
+  "min_tipi_version": "4.0.0",
+  "version": "latest",
+  "source": "https://github.com/frappe/lms",
+  "exposable": true,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "dynamic_config": true,
+  "form_fields": [
+    {
+      "type": "random",
+      "min": 32,
+      "max": 32,
+      "label": "Database root password",
+      "env_variable": "MARIADB_ROOT_PASSWORD"
+    }
+  ]
+}
