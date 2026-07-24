@@ -1,16 +1,15 @@
 {
-  "name": "Frappe LMS",
+  "name": "Frappe",
   "id": "frappe",
   "available": true,
-  "short_desc": "Learning Management System built on Frappe",
+  "short_desc": "A better Moodle.",
   "author": "Frappe Technologies",
   "port": 8000,
   "categories": [
-    "utilities"
+    "media"
   ],
-  "description": "A fully featured open-source learning management system.",
-  "tipi_version": 1,
-  "min_tipi_version": "4.0.0",
+  "description": "A better Moodle.",
+  "tipi_version": 2,
   "version": "latest",
   "source": "https://github.com/frappe/lms",
   "exposable": true,
