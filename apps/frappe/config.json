@@ -9,7 +9,7 @@
     "media"
   ],
   "description": "A better Moodle.",
-  "tipi_version": 3,
+  "tipi_version": 4,
   "version": "latest",
   "source": "https://github.com/frappe/lms",
   "exposable": true,

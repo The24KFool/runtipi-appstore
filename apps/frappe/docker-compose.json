@@ -17,11 +17,11 @@
 	  "working_dir": "/home/frappe",
       "volumes": [
         {
-          "hostPath": "${APP_DATA_DIR}/frappe/workspace",
+          "hostPath": "${APP_DATA_DIR}/workspace",
           "containerPath": "/workspace"
         },
 		{
-          "hostPath": "${APP_DATA_DIR}/frappe/home/frappe",
+          "hostPath": "${APP_DATA_DIR}/home/frappe",
           "containerPath": "/home/frappe"
         }
       ],
