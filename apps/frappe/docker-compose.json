@@ -28,7 +28,7 @@
 	  "command": [
         "bash",
         "/workspace/init.sh"
-      ]
+      ],
       "addPorts": [
         {
           "hostPort": 9000,
