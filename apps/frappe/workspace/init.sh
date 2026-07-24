@@ -1,4 +1,6 @@
 #!/bin/bash
+
+# Export local bench binary path
 export PATH="/home/frappe/.local/bin:${PATH}"
 
 # Move into home directory
@@ -34,7 +36,7 @@ else
     bench new-site lms.localhost \
       --force \
       --mariadb-root-password "${MARIADB_ROOT_PASSWORD}" \
-      --admin-password changeme \
+      --admin-password changeme! \
       --no-mariadb-socket
 
     # Install apps onto the site

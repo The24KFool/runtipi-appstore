@@ -9,23 +9,23 @@
       "dependsOn": [
         "frappe-db",
         "frappe-redis-cache",
-		"frappe-redis-queue"
+        "frappe-redis-queue"
       ],
       "environment": {
         "SHELL": "/bin/bash"
       },
-	  "working_dir": "/home/frappe",
+      "working_dir": "/home/frappe",
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/workspace",
           "containerPath": "/workspace"
         },
-		{
-          "hostPath": "${APP_DATA_DIR}/data",
-          "containerPath": "/home/frappe"
+        {
+          "hostPath": "${APP_DATA_DIR}/frappe-bench",
+          "containerPath": "/home/frappe/frappe-bench"
         }
       ],
-	  "command": [
+      "command": [
         "bash",
         "/workspace/init.sh"
       ],
@@ -39,8 +39,8 @@
     {
       "name": "frappe-db",
       "image": "mariadb:12.3.2",
-	  "restart": "always",
-	  "environment": {
+      "restart": "always",
+      "environment": {
         "MARIADB_ROOT_PASSWORD": "${MARIADB_ROOT_PASSWORD}"
       },
       "volumes": [
@@ -49,8 +49,12 @@
           "containerPath": "/var/lib/mysql"
         }
       ],
-	  "command": ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--skip-character-set-client-handshake"]
-    },	
+      "command": [
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+        "--skip-character-set-client-handshake"
+      ]
+    },  
     {
       "name": "frappe-redis-cache",
       "image": "redis:7"
