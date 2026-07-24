@@ -21,7 +21,7 @@
           "containerPath": "/workspace"
         },
 		{
-          "hostPath": "${APP_DATA_DIR}/home/frappe",
+          "hostPath": "${APP_DATA_DIR}/data",
           "containerPath": "/home/frappe"
         }
       ],
